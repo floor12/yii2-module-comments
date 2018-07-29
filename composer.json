@@ -1,0 +1,44 @@
+{
+  "name": "floor12/yii2-module-comments",
+  "description": "Yii2 module for comments",
+  "type": "yii2-extension",
+  "minimum-stability": "stable",
+  "keywords": [
+    "floor12",
+    "yii2 module",
+    "yii",
+    "yii2",
+    "comments",
+    "comment",
+    "yii 2"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "floor12",
+      "email": "primelifecoder@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "yiisoft/yii2": "~2.0.13",
+    "floor12/yii2-notification": "*",
+    "floor12/yii2-editmodal": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "floor12\\comments\\": [
+        "src/"
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "floor12\\comments\\tests\\": "tests/"
+    }
+  }
+}

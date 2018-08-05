@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160730_102518_comment extends Migration
+class m180722_102518_comment extends Migration
 {
     public function safeUp()
     {
@@ -19,8 +19,9 @@ class m160730_102518_comment extends Migration
             'object_id' => $this->integer()->notNull()->comment('ID объёкта'),
             'parent_id' => $this->integer()->notNull()->comment('Родительский комментарий'),
             'content' => $this->text()->notNull()->comment('Текст комментария'),
-            'author_name' => $this->string()->notNull()->comment('Имя автора комментария'),
-            'author_email' => $this->string()->notNull()->comment('Email автора комментария'),
+            'author_name' => $this->string()->null()->comment('Имя автора комментария'),
+            'author_email' => $this->string()->null()->comment('Email автора комментария'),
+            'subscribe' => $this->boolean()->null()->comment('получать комментарии из этой ветки на почту'),
         ],
             $tableOptions
         );
@@ -30,6 +31,7 @@ class m160730_102518_comment extends Migration
         $this->createIndex('idx-comment2-created', '{{%comment2}}', 'created');
         $this->createIndex('idx-comment2-create_user_id', '{{%comment2}}', 'create_user_id');
         $this->createIndex('idx-comment2-status', '{{%comment2}}', 'status');
+        $this->createIndex('idx-comment2-subscribe', '{{%comment2}}', 'subscribe');
 
         $this->createIndex('idx-comment2-parent_id', '{{%comment2}}', 'parent_id');
         $this->createIndex('idx-comment2-object_id', '{{%comment2}}', 'object_id');

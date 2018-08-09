@@ -71,20 +71,50 @@ class CommentCreate
             $this->_model->object_id = $this->_object_id;
         }
 
+        $this->_model->url = Yii::$app->request->referrer;
+
         $this->_message = Yii::t('app.f12.comments', "Thank you! Your comment is published!");
 
         $this->_model->status = CommentStatus::PUBLISHED;
 
-        if (Yii::$app->getModule('comments')->moderationMode == Module::MODE_PRE_MODERATION) {
+
+        // Если активная премодерация и пишет не админ
+        if (
+            Yii::$app->getModule('comments')->moderationMode == Module::MODE_PRE_MODERATION &&
+            !Yii::$app->user->can(Yii::$app->getModule('comments')->editRole)
+        ) {
             $this->_model->status = CommentStatus::PENDING;
             $this->_message = Yii::t('app.f12.comments', "Thank you! Your comment will be published after moderation.");
+
+            if (Yii::$app->getModule('comments')->adminEmailAddress) {
+                $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
+                    Yii::$app
+                        ->mailer
+                        ->compose(
+                            ['html' => "@vendor/floor12/yii2-module-comments/src/mail/new-comment-html.php"],
+                            ['comment' => $event->sender, 'moderateLink' => Yii::$app->urlManager->createAbsoluteUrl('/comments/admin')]
+                        )
+                        ->setFrom([Yii::$app->getModule('comments')->emailFromAddress => Yii::t('app.f12.comments', 'Сomment module email robot')])
+                        ->setSubject(Yii::t('app.f12.comments', 'New comment is waiting for moderation.'))
+                        ->setTo(Yii::$app->getModule('comments')->adminEmailAddress)
+                        ->send();
+                });
+            }
+
         }
+
+        // уведомляем подписчиков
+        $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
+            Yii::createObject(CommentInform::class, [$event->sender])->execute();
+        });
 
         if (!$this->_identity && Yii::$app->getModule('comments')->userMode == Module::MODE_GUESTS)
             $this->_model->scenario = Comment::SCENARIO_GUEST;
 
-        if ($this->_identity)
+        if ($this->_identity) {
             $this->_model->create_user_id = $this->_model->update_user_id = $this->_identity->getId();
+            $this->_model->author_email  = $this->_identity->getCommentatorEmail();
+        }
 
 
         if (!$this->_model->save())

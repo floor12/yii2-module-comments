@@ -26,7 +26,7 @@ class CommentQuery extends \yii\db\ActiveQuery
      */
     public function byObject($classname, $object_id)
     {
-        return $this->where([
+        return $this->andWhere([
             'class' => $classname,
             'object_id' => $object_id,
         ]);

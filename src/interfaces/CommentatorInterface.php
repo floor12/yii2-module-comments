@@ -41,5 +41,18 @@ interface CommentatorInterface
      */
     public function getCommentatorAvatar(): string;
 
+    /** Возращаем строку содержащую email автора.
+     *  Пример реализации
+     *
+     *      public function getCommentatorAvatar(): string
+     *      {
+     *          return $this->email;
+     *      }
+     *
+     * @return string
+     */
+    public function getCommentatorEmail(): string;
+
+
 
 }

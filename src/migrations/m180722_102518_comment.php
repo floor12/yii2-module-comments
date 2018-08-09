@@ -22,6 +22,7 @@ class m180722_102518_comment extends Migration
             'author_name' => $this->string()->null()->comment('Имя автора комментария'),
             'author_email' => $this->string()->null()->comment('Email автора комментария'),
             'subscribe' => $this->boolean()->null()->comment('получать комментарии из этой ветки на почту'),
+            'url' => $this->string()->null()->comment('адрес страницы комментария'),
         ],
             $tableOptions
         );

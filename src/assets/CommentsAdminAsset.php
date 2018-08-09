@@ -17,7 +17,7 @@ class CommentsAdminAsset extends AssetBundle
     public $sourcePath = '@vendor/floor12/yii2-module-comments/assets/';
 
     public $css = [
-
+        'floor12-comments.css',
     ];
 
     public $js = [

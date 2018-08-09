@@ -3,6 +3,7 @@
 namespace floor12\comments\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "comment2".
@@ -14,6 +15,8 @@ use Yii;
  * @property int $create_user_id Создал
  * @property int $update_user_id Обновил
  * @property string $class Класс объёкта
+ * @property string $url Адресс страницы комментария
+ * @property int $subscribe  подписка на ветку
  * @property int $object_id ID объёкта
  * @property int $parent_id Родительский комментарий
  * @property string $content Текст комментария
@@ -22,10 +25,15 @@ use Yii;
  *
  * @property string $avatar Имя автора комментария
  * @property string $name  Аватар автора комментария
+ * @property string $email  Email автора комментария
+ * @property ActiveRecord $userObject()  Объект автора
  */
 class Comment extends \yii\db\ActiveRecord
 {
     const SCENARIO_GUEST = 'guest';
+    const SUBSCRIBED = '1';
+    const UNSUBSCRIBED = '0';
+
 
     /**
      * {@inheritdoc}
@@ -33,6 +41,11 @@ class Comment extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'comment2';
+    }
+
+    public function init()
+    {
+        $this->subscribe = self::SUBSCRIBED;
     }
 
     /**
@@ -83,11 +96,14 @@ class Comment extends \yii\db\ActiveRecord
         return new CommentQuery(get_called_class());
     }
 
+
+    /** Return name of author (from comment attribute or from User class)
+     * @return string
+     */
     public function getName()
     {
         if ($this->create_user_id) {
-            $classname = Yii::$app->getModule('comments')->userClass;
-            $model = $classname::findOne($this->create_user_id);
+            $model = $this->userObject;
             if (!$model)
                 return Yii::t('app.f12.comments', 'Deleted user');
             return $model->commentatorName;
@@ -95,15 +111,39 @@ class Comment extends \yii\db\ActiveRecord
         return $this->author_name;
     }
 
+    /** Return avatar of author (from comment attribute or from User class)
+     * @return string
+     */
     public function getAvatar()
     {
         if ($this->create_user_id) {
-            $classname = Yii::$app->getModule('comments')->userClass;
-            $model = $classname::findOne($this->create_user_id);
+            $model = $this->userObject;
+            if (!$model)
+                Yii::$app->getModule('comments')->defaultAvatar;;
             return $model->commentatorAvatar;
         }
         return Yii::$app->getModule('comments')->defaultAvatar;
 
+    }
+
+    /** Return email of author (from comment attribute or from User class)
+     * @return string
+     */
+    public function getEmail()
+    {
+        if ($this->create_user_id) {
+            $model = $this->userObject;
+            if (!$model)
+                return Yii::t('app.f12.comments', 'Deleted user');
+            return $model->commentatorEmail;
+        }
+        return $this->author_email;
+    }
+
+    public function getUserObject()
+    {
+        $classname = Yii::$app->getModule('comments')->userClass;
+        return $classname::findOne($this->create_user_id);
     }
 
     /**

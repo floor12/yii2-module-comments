@@ -9,10 +9,12 @@
 namespace floor12\comments\controllers;
 
 use floor12\comments\logic\CommentCreate;
+use floor12\comments\logic\CommentUnsubscribe;
 use floor12\comments\models\Comment;
 use floor12\comments\Module;
 use floor12\editmodal\DeleteAction;
 use Yii;
+use yii\helpers\Html;
 use yii\web\Controller;
 
 class FrontendController extends Controller
@@ -73,6 +75,18 @@ class FrontendController extends Controller
         }
 
         return $this->renderAjax(Yii::$app->getModule('comments')->viewForm, ['model' => $model]);
+    }
+
+
+    public function actionUnsubscibe(string $comment_id, string $email, string $hash)
+    {
+        Yii::createObject(CommentUnsubscribe::class, [
+            (int)$comment_id,
+            $email,
+            $hash
+        ])->execute();
+
+        return $this->renderContent(Html::tag('h1', Yii::t('app.f12.comments', 'Your email is unsubscribed.')));
     }
 
     /**

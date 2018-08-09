@@ -55,6 +55,12 @@ class Module extends \yii\base\Module
     /** @var boolean Show avatars on fronend */
     public $useAvatar = true;
 
+    /** @var string  Admin email address to send notifications in case of pre-moderation */
+    public $adminEmailAddress = "";
+
+    /** @var string  Email address to send notifications from*/
+    public $emailFromAddress = "";
+
     /** @var boolean */
     public $useWYSIWYG = true;
 

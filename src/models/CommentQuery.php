@@ -12,7 +12,7 @@ use yii\db\Expression;
 class CommentQuery extends \yii\db\ActiveQuery
 {
     /** Published comments
-     * @return Comment2Query
+     * @return CommentQuery
      */
     public function active()
     {

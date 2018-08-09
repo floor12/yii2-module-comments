@@ -40,7 +40,7 @@ class CommentUnsubscribe
         if ($this->_hash != self::hash($this->_email))
             throw new BadRequestHttpException('Invalid hash');
 
-        Yii::$app->db->createCommand()->update("{{comment2}}", [
+        Yii::$app->db->createCommand()->update("{{f12_comment}}", [
             'subscribe' => Comment::UNSUBSCRIBED
         ], [
             'class' => $this->_model->class,

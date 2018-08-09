@@ -6,7 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "comment2".
+ * This is the model class for table "f12_comment".
  *
  * @property int $id
  * @property int $status Статус
@@ -40,7 +40,7 @@ class Comment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'comment2';
+        return 'f12_comment';
     }
 
     public function init()

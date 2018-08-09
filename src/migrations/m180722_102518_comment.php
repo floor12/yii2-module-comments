@@ -8,7 +8,7 @@ class m180722_102518_comment extends Migration
     {
         $tableOptions = 'ENGINE=InnoDB';
 
-        $this->createTable('{{%comment2}}', [
+        $this->createTable('{{%f12_comment}}', [
             'id' => $this->primaryKey(),
             'status' => $this->integer()->notNull()->comment('Статус'),
             'created' => $this->integer()->notNull()->comment('Создан'),
@@ -27,21 +27,21 @@ class m180722_102518_comment extends Migration
             $tableOptions
         );
 
-        $this->createIndex('idx-comment2-updated', '{{%comment2}}', 'updated');
-        $this->createIndex('idx-comment2-update_user_id', '{{%comment2}}', 'update_user_id');
-        $this->createIndex('idx-comment2-created', '{{%comment2}}', 'created');
-        $this->createIndex('idx-comment2-create_user_id', '{{%comment2}}', 'create_user_id');
-        $this->createIndex('idx-comment2-status', '{{%comment2}}', 'status');
-        $this->createIndex('idx-comment2-subscribe', '{{%comment2}}', 'subscribe');
+        $this->createIndex('idx-f12_comment-updated', '{{%f12_comment}}', 'updated');
+        $this->createIndex('idx-f12_comment-update_user_id', '{{%f12_comment}}', 'update_user_id');
+        $this->createIndex('idx-f12_comment-created', '{{%f12_comment}}', 'created');
+        $this->createIndex('idx-f12_comment-create_user_id', '{{%f12_comment}}', 'create_user_id');
+        $this->createIndex('idx-f12_comment-status', '{{%f12_comment}}', 'status');
+        $this->createIndex('idx-f12_comment-subscribe', '{{%f12_comment}}', 'subscribe');
 
-        $this->createIndex('idx-comment2-parent_id', '{{%comment2}}', 'parent_id');
-        $this->createIndex('idx-comment2-object_id', '{{%comment2}}', 'object_id');
-        $this->createIndex('idx-comment2-class', '{{%comment2}}', 'class');
-        $this->createIndex('idx-comment2-class-object-id', '{{%comment2}}', ['class', 'object_id']);
+        $this->createIndex('idx-f12_comment-parent_id', '{{%f12_comment}}', 'parent_id');
+        $this->createIndex('idx-f12_comment-object_id', '{{%f12_comment}}', 'object_id');
+        $this->createIndex('idx-f12_comment-class', '{{%f12_comment}}', 'class');
+        $this->createIndex('idx-f12_comment-class-object-id', '{{%f12_comment}}', ['class', 'object_id']);
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%comment2}}');
+        $this->dropTable('{{%f12_comment}}');
     }
 }

@@ -21,7 +21,8 @@ use yii\web\View;
 <div style="padding: 20px; background-color: #f6f6f6; border: 1px #eee solid;">
 
     <b><?= $comment->name ?> (<?= $comment->email ?>)</b>
-    <?= $comment->content ?>
+
+    <?= Yii::$app->getModule('comments')->useWYSIWYG ? $comment->content : Html::tag('p', nl2br($comment->content)); ?>
 
 </div>
 

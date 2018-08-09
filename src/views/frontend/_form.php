@@ -44,7 +44,7 @@ if (Yii::$app->getModule('comments')->userMode == Module::MODE_GUESTS && Yii::$a
     ]) :
     $form->field($model, 'content')->textarea([
         'rows' => 5,
-        'placeholder' => Yii::t('app.f12.comments', 'text of your comment...'),
+        'placeholder' => Yii::t('app.f12.comments', 'enter the comment here...'),
     ])->label(false);
 ?>
 

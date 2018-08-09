@@ -45,5 +45,5 @@ $fontAwesome = Yii::$app->getModule('comments')->fontAwesome;
             <?= Yii::$app->formatter->asDatetime($model->created) ?>
         </div>
     </div>
-    <?= $model->content ?>
+    <?= Yii::$app->getModule('comments')->useWYSIWYG ? $model->content : Html::tag('p', nl2br($model->content)); ?>
 </div>

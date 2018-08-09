@@ -44,5 +44,7 @@ return [
     'New comment in thread' => 'Новый комментарий в ветке',
     'To unsubscribe from comments of current thread press' => 'Чтобы отписаться от кооментариев этой ветки нажмите на',
     'Your email is unsubscribed.' => 'Ваш email отписан.',
+    'enter the comment here...' => 'впишите свой комментарий сюда...',
+    'There are no comments yet. Be the first who will post a comment!' => 'Тут еще ничего нет. Будьте первым, кто оставит комментарий!',
     '' => '',
 ];

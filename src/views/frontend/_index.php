@@ -22,7 +22,9 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
 
     <div class="f12-comment-date"><?= \Yii::$app->formatter->asDatetime($model->created) ?></div>
     <div class="f12-comment-name"><?= $model->name ?></div>
-    <div class="f12-comment-content"><?= $model->content; ?></div>
+    <div class="f12-comment-content">
+        <?= Yii::$app->getModule('comments')->useWYSIWYG ? $model->content : Html::tag('p', nl2br($model->content)); ?>
+    </div>
 
     <div class="f12-comment-control">
         <?= $allowAnswer ? Html::a(Yii::t('app.f12.comments', 'answer'), null, [

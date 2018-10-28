@@ -32,6 +32,13 @@ $fontAwesome = Yii::$app->getModule('comments')->fontAwesome;
                 'class' => 'btn btn-default btn-xs',
             ]) ?>
 
+            <?= $model->status == CommentStatus::PUBLISHED ? Html::a($fontAwesome::icon('link'), $model->url, [
+                'title' => Yii::t('app.f12.comments', 'Go to page'),
+                'data-pjax' => '0',
+                'target' => '_blank',
+                'class' => 'btn btn-default btn-xs',
+            ]) : null ?>
+
             <?= $model->status != CommentStatus::DELETED ? Html::a($fontAwesome::icon('trash'), null, [
                 'onclick' => EditModalHelper::deleteItem(['/comments/admin/delete'], $model->id),
                 'title' => Yii::t('app.f12.comments', 'Delete this comment'),

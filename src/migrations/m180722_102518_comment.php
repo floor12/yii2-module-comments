@@ -17,7 +17,7 @@ class m180722_102518_comment extends Migration
             'update_user_id' => $this->integer()->null()->comment('Обновил'),
             'class' => $this->string()->notNull()->comment('Класс объёкта'),
             'object_id' => $this->integer()->notNull()->comment('ID объёкта'),
-            'parent_id' => $this->integer()->notNull()->comment('Родительский комментарий'),
+            'parent_id' => $this->integer()->notNull()->defaultValue(0)->comment('Родительский комментарий'),
             'content' => $this->text()->notNull()->comment('Текст комментария'),
             'author_name' => $this->string()->null()->comment('Имя автора комментария'),
             'author_email' => $this->string()->null()->comment('Email автора комментария'),

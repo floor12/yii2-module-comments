@@ -1,6 +1,7 @@
 var f12CommentFormUrl;
 var f12CommentDeleteUrl;
 var f12CommentIndexUrl;
+var f12CommentMainParams;
 
 function f12CommentsLoadForm(params) {
     $('form.f12-comments-form').remove();

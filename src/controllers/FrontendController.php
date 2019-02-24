@@ -59,6 +59,9 @@ class FrontendController extends Controller
 
         $model = new Comment();
 
+        if (Yii::$app->user->isGuest)
+            $model->scenario = Comment::SCENARIO_GUEST;
+
         if (Yii::$app->request->isPost) {
 
             $result = Yii::createObject(CommentCreate::class, [

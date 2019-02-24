@@ -21,6 +21,7 @@ class CommentsWidget extends Widget
     public $formPosition;
     public $object_id;
     public $classname;
+    public $showForm = false;
 
 
     private $_html;
@@ -76,17 +77,20 @@ class CommentsWidget extends Widget
         if ($this->formPosition == Module::FORM_POSITION_AFTER_LIST)
             $this->_html .= $this->_commentFormBlock;
 
-        $this->view->registerJs("f12CommentIndexUrl = '{$this->_f12CommentIndexUrl}'");
-        $this->view->registerJs("f12CommentFormUrl = '{$this->_f12CommentFormUrl}'");
-        $this->view->registerJs("f12CommentDeleteUrl = '{$this->_f12CommentDeleteUrl}'");
-
         $formParams = json_encode([
             'block_id' => "#{$this->_commentFormBlock_id}",
             'classname' => $this->classname,
             'object_id' => $this->object_id,
         ]);
 
-        $this->view->registerJs("f12CommentsLoadForm({$formParams})", View::POS_READY, $this->_commentFormBlock_id);
+        $this->view->registerJs("f12CommentIndexUrl = '{$this->_f12CommentIndexUrl}'");
+        $this->view->registerJs("f12CommentFormUrl = '{$this->_f12CommentFormUrl}'");
+        $this->view->registerJs("f12CommentDeleteUrl = '{$this->_f12CommentDeleteUrl}'");
+        $this->view->registerJs("f12CommentMainParams = {$formParams}");
+
+
+        if ($this->showForm)
+            $this->view->registerJs("f12CommentsLoadForm(f12CommentMainParams)", View::POS_READY, $this->_commentFormBlock_id);
         $this->view->registerJs("f12CommentsLoadList('#{$this->_commentListBlock_id}')", View::POS_READY, $this->_commentListBlock_id);
 
         return Html::tag('div', $this->_html, ['class' => 'f12-comments']);

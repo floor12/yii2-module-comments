@@ -58,7 +58,7 @@ class Module extends \yii\base\Module
     /** @var string  Admin email address to send notifications in case of pre-moderation */
     public $adminEmailAddress = "";
 
-    /** @var string  Email address to send notifications from*/
+    /** @var string  Email address to send notifications from */
     public $emailFromAddress = "";
 
     /** @var boolean */
@@ -86,6 +86,10 @@ class Module extends \yii\base\Module
     public $viewCommentList = '@vendor/floor12/yii2-module-comments/src/views/frontend/index';
     public $viewCommentListItem = '@vendor/floor12/yii2-module-comments/src/views/frontend/_index';
     public $viewForm = '@vendor/floor12/yii2-module-comments/src/views/frontend/_form';
+
+    public $viewAdminIndex = '@vendor/floor12/yii2-module-comments/src/views/admin/index';
+    public $viewAdminIndexItem = '@vendor/floor12/yii2-module-comments/src/views/admin/_index';
+    public $viewAdminForm = '@vendor/floor12/yii2-module-comments/src/views/admin/_form';
 
 
     /** @inheritdoc */

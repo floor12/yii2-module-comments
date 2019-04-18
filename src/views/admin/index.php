@@ -54,7 +54,7 @@ Pjax::begin(['id' => 'items']);
 
 echo ListView::widget([
     'dataProvider' => $model->dataProvider(),
-    'itemView' => '_index',
+    'itemView' => Yii::$app->getModule('comments')->viewAdminIndexItem,
     'layout' => '{items}{pager}{summary}'
 ]);
 

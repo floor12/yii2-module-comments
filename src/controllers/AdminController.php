@@ -66,7 +66,7 @@ class AdminController extends Controller
         $model = new CommentFilter();
         $model->load(Yii::$app->request->get());
         $model->validate();
-        return $this->render('index', ['model' => $model]);
+        return $this->render(Yii::$app->getModule('comments')->viewAdminIndex, ['model' => $model]);
     }
 
     /** Comment approve action
@@ -98,6 +98,7 @@ class AdminController extends Controller
             'form' => [
                 'class' => EditModalAction::class,
                 'model' => Comment::class,
+                'view' => Yii::$app->getModule('comments')->viewAdminForm,
                 'message' => Yii::t('app.f12.comments', 'The comment is saved.')
             ],
             'delete' => [

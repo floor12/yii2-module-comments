@@ -18,13 +18,14 @@ class CommentFilter extends Model
     public $filter;
     public $class;
     public $order;
+    public $object_id;
 
     private $_query;
 
     public function rules()
     {
         return [
-            ['status', 'integer'],
+            [['status', 'object_id'], 'integer'],
             [['filter', 'class'], 'string']
         ];
     }
@@ -34,6 +35,7 @@ class CommentFilter extends Model
         $this->_query = Comment::find()
             ->tree($this->order)
             ->andFilterWhere(['=', 'status', $this->status])
+            ->andFilterWhere(['=', 'object_id', $this->object_id])
             ->andFilterWhere(['LIKE', 'content', $this->filter])
             ->andFilterWhere(['=', 'class', $this->class]);
 

@@ -15,7 +15,7 @@ class m190419_072738_add_phone_to_comment extends Migration
     {
         $this->addColumn(
             Comment::tableName(),
-            'author_email',
+            'author_phone',
             $this
                 ->string(14)
                 ->null()

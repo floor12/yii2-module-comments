@@ -1,5 +1,6 @@
 <?php
 
+use floor12\comments\models\Comment;
 use yii\db\Migration;
 
 class m180722_102518_comment extends Migration
@@ -8,7 +9,7 @@ class m180722_102518_comment extends Migration
     {
         $tableOptions = 'ENGINE=InnoDB';
 
-        $this->createTable('{{%f12_comment}}', [
+        $this->createTable(Comment::tableName(), [
             'id' => $this->primaryKey(),
             'status' => $this->integer()->notNull()->comment('Статус'),
             'created' => $this->integer()->notNull()->comment('Создан'),
@@ -27,21 +28,21 @@ class m180722_102518_comment extends Migration
             $tableOptions
         );
 
-        $this->createIndex('idx-f12_comment-updated', '{{%f12_comment}}', 'updated');
-        $this->createIndex('idx-f12_comment-update_user_id', '{{%f12_comment}}', 'update_user_id');
-        $this->createIndex('idx-f12_comment-created', '{{%f12_comment}}', 'created');
-        $this->createIndex('idx-f12_comment-create_user_id', '{{%f12_comment}}', 'create_user_id');
-        $this->createIndex('idx-f12_comment-status', '{{%f12_comment}}', 'status');
-        $this->createIndex('idx-f12_comment-subscribe', '{{%f12_comment}}', 'subscribe');
+        $this->createIndex('idx-f12_comment-updated', Comment::tableName(), 'updated');
+        $this->createIndex('idx-f12_comment-update_user_id', Comment::tableName(), 'update_user_id');
+        $this->createIndex('idx-f12_comment-created', Comment::tableName(), 'created');
+        $this->createIndex('idx-f12_comment-create_user_id', Comment::tableName(), 'create_user_id');
+        $this->createIndex('idx-f12_comment-status', Comment::tableName(), 'status');
+        $this->createIndex('idx-f12_comment-subscribe', Comment::tableName(), 'subscribe');
 
-        $this->createIndex('idx-f12_comment-parent_id', '{{%f12_comment}}', 'parent_id');
-        $this->createIndex('idx-f12_comment-object_id', '{{%f12_comment}}', 'object_id');
-        $this->createIndex('idx-f12_comment-class', '{{%f12_comment}}', 'class');
-        $this->createIndex('idx-f12_comment-class-object-id', '{{%f12_comment}}', ['class', 'object_id']);
+        $this->createIndex('idx-f12_comment-parent_id', Comment::tableName(), 'parent_id');
+        $this->createIndex('idx-f12_comment-object_id', Comment::tableName(), 'object_id');
+        $this->createIndex('idx-f12_comment-class', Comment::tableName(), 'class');
+        $this->createIndex('idx-f12_comment-class-object-id', Comment::tableName(), ['class', 'object_id']);
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%f12_comment}}');
+        $this->dropTable(Comment::tableName());
     }
 }

@@ -46,5 +46,6 @@ return [
     'Your email is unsubscribed.' => 'Ваш email отписан.',
     'enter the comment here...' => 'впишите свой комментарий сюда...',
     'There are no comments yet. Be the first who will post a comment!' => 'Тут еще ничего нет. Будьте первым, кто оставит комментарий!',
-    '' => '',
+    'Author phone' => 'Номер телефона',
+    'This field is required.' => 'Это поле обязательное',
 ];

@@ -2,6 +2,7 @@
 
 namespace floor12\comments\models;
 
+use floor12\phone\PhoneValidator;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -22,6 +23,7 @@ use yii\db\ActiveRecord;
  * @property string $content Текст комментария
  * @property string $author_name Имя автора комментария
  * @property string $author_email Email автора комментария
+ * @property string $author_phone Телефон автора комментария
  *
  * @property string $avatar Имя автора комментария
  * @property string $name  Аватар автора комментария
@@ -43,6 +45,15 @@ class Comment extends \yii\db\ActiveRecord
         return 'f12_comment';
     }
 
+    /**
+     * {@inheritdoc}
+     * @return CommentQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new CommentQuery(get_called_class());
+    }
+
     public function init()
     {
         $this->subscribe = self::SUBSCRIBED;
@@ -54,15 +65,29 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'created', 'updated', 'class', 'object_id', 'content'], 'required'],
+            [['status', 'created', 'updated', 'class', 'object_id', 'content'], 'required', 'message' => Yii::t('app.f12.comments', 'This field is required.')],
             [['status', 'created', 'updated', 'create_user_id', 'update_user_id', 'object_id', 'parent_id', 'subscribe'], 'integer'],
             [['content'], 'string'],
             [['author_email'], 'email'],
+            ['author_phone', PhoneValidator::class],
             [['class', 'author_name', 'author_email'], 'string', 'max' => 255],
-            [['author_name', 'author_email'], 'required', 'on' => self::SCENARIO_GUEST],
+            [['author_name'], 'required', 'on' => self::SCENARIO_GUEST, 'message' => Yii::t('app.f12.comments', 'This field is required.')],
+            [['author_email'], 'required', 'on' => self::SCENARIO_GUEST, 'message' => Yii::t('app.f12.comments', 'This field is required.')],
+            [['author_phone'], 'required', 'on' => self::SCENARIO_GUEST, 'message' => Yii::t('app.f12.comments', 'This field is required.')],
             [['create_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['create_user_id' => 'id']],
             [['update_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['update_user_id' => 'id']],
         ];
+    }
+
+    /**
+     * @param $attribute
+     */
+    public function requiredany($attribute)
+    {
+        die($attribute);
+        if (!$this->author_email && !$this->author_phone)
+            $this->addError($attribute, Yii::t('app.f12.comments', 'Enter email or phone number'));
+
     }
 
     /**
@@ -83,19 +108,10 @@ class Comment extends \yii\db\ActiveRecord
             'content' => Yii::t('app.f12.comments', 'Comment text'),
             'author_name' => Yii::t('app.f12.comments', 'Author name'),
             'author_email' => Yii::t('app.f12.comments', 'Author email'),
+            'Author Phone' => Yii::t('app.f12.comments', 'Author phone'),
             'subscribe' => Yii::t('app.f12.comments', 'Send me new comments in this thread to email.'),
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     * @return CommentQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new CommentQuery(get_called_class());
-    }
-
 
     /** Return name of author (from comment attribute or from User class)
      * @return string

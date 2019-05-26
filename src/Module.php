@@ -33,6 +33,17 @@ class Module extends \yii\base\Module
     const ORDER_NEW_FIRST = '-';
     const ORDER_OLD_FIRST = '+';
 
+    /** @var null Classname of comment postprocessor */
+    public $commentPostProcessor = null;
+
+    /** @var bool Send email to user about comment if they are subscribed */
+    public $enableNotificator = true;
+
+    /** @var bool Allow users subscribe to comments in thread */
+    public $allowSubscribe = true;
+
+    /** @var bool Allow attach files to comments */
+    public $allowAttachments = false;
 
     /**  @var string Switch comment form position: before or after comment list. */
     public $formPosition = self::FORM_POSITION_BEFORE_LIST;

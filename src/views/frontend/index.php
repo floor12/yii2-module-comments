@@ -12,10 +12,14 @@
 
 ?>
 
+
+<button onclick="f12CommentsLoadForm(f12CommentMainParams); $(this).hide();" class="f12-comments-btn-add-new">
+    <?= Yii::t('app.f12.comments', "Add new comment") ?>
+</button>
+
 <div class="f12-comments-header">
     <?= Yii::t('app.f12.comments', "Comments") ?> <?= $commentsTotal ? "($commentsTotal)" : NULL ?>
 </div>
 <div class="object-comments">
-    <?=$commentsTotal? $comments : Yii::t('app.f12.comments',"There are no comments yet. Be the first who will post a comment!")?>
+    <?= $commentsTotal ? $comments : Yii::t('app.f12.comments', "There are no comments yet. Be the first who will post a comment!") ?>
 </div>
-

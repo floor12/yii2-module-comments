@@ -103,17 +103,25 @@ class CommentCreate
 
         }
 
+        if (Yii::$app->getModule('comments')->commentPostProcessor) {
+
+            $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
+                Yii::createObject(Yii::$app->getModule('comments')->commentPostProcessor, [$this->_model])->execute();
+            });
+        }
+
         // уведомляем подписчиков
-        $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
-            Yii::createObject(CommentInform::class, [$event->sender])->execute();
-        });
+        if (Yii::$app->getModule('comments')->enableNotificator)
+            $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
+                Yii::createObject(CommentInform::class, [$event->sender])->execute();
+            });
 
         if (!$this->_identity && Yii::$app->getModule('comments')->userMode == Module::MODE_GUESTS)
             $this->_model->scenario = Comment::SCENARIO_GUEST;
 
         if ($this->_identity) {
             $this->_model->create_user_id = $this->_model->update_user_id = $this->_identity->getId();
-            $this->_model->author_email  = $this->_identity->getCommentatorEmail();
+            $this->_model->author_email = $this->_identity->getCommentatorEmail();
         }
 
 

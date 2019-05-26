@@ -48,4 +48,6 @@ return [
     'There are no comments yet. Be the first who will post a comment!' => 'Тут еще ничего нет. Будьте первым, кто оставит комментарий!',
     'Author phone' => 'Номер телефона',
     'This field is required.' => 'Это поле обязательное',
+    'Attachments' => 'Файлы',
+    'Add new comment' => 'Добавить комментарий'
 ];

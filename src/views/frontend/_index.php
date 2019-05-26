@@ -10,6 +10,7 @@
  * @var $allowAnswer boolean
  */
 
+use floor12\files\components\FilesBlock;
 use yii\helpers\Html;
 
 $ansId = "commentAnswer{$model->id}";
@@ -25,6 +26,11 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
     <div class="f12-comment-content">
         <?= Yii::$app->getModule('comments')->useWYSIWYG ? $model->content : Html::tag('p', nl2br($model->content)); ?>
     </div>
+
+    <?php
+    if (Yii::$app->getModule('comments')->allowAttachments && $model->attachments)
+        echo FilesBlock::widget(['files' => $model->attachments])
+    ?>
 
     <div class="f12-comment-control">
         <?= $allowAnswer ? Html::a(Yii::t('app.f12.comments', 'answer'), null, [

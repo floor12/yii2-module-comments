@@ -2,6 +2,9 @@
 
 namespace floor12\comments\models;
 
+use floor12\comments\interfaces\CommentatorInterface;
+use floor12\files\components\FileBehaviour;
+use floor12\files\models\File;
 use floor12\phone\PhoneValidator;
 use Yii;
 use yii\db\ActiveRecord;
@@ -29,6 +32,7 @@ use yii\db\ActiveRecord;
  * @property string $name  Аватар автора комментария
  * @property string $email  Email автора комментария
  * @property ActiveRecord $userObject()  Объект автора
+ * @property File[] $attachments  Приложенные файлы
  */
 class Comment extends \yii\db\ActiveRecord
 {
@@ -54,9 +58,13 @@ class Comment extends \yii\db\ActiveRecord
         return new CommentQuery(get_called_class());
     }
 
+    /**
+     * @inheritDoc
+     */
     public function init()
     {
-        $this->subscribe = self::SUBSCRIBED;
+        $this->subscribe = Yii::$app->getModule('comments')->allowSubscribe ? self::SUBSCRIBED : self::UNSUBSCRIBED;
+        parent::init();
     }
 
     /**
@@ -76,6 +84,8 @@ class Comment extends \yii\db\ActiveRecord
             [['author_phone'], 'required', 'on' => self::SCENARIO_GUEST, 'message' => Yii::t('app.f12.comments', 'This field is required.')],
             [['create_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['create_user_id' => 'id']],
             [['update_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['update_user_id' => 'id']],
+            [['attachments'], 'file', 'maxFiles' => 100],
+            ['attachments_ids', 'safe']
         ];
     }
 
@@ -110,6 +120,7 @@ class Comment extends \yii\db\ActiveRecord
             'author_email' => Yii::t('app.f12.comments', 'Author email'),
             'Author Phone' => Yii::t('app.f12.comments', 'Author phone'),
             'subscribe' => Yii::t('app.f12.comments', 'Send me new comments in this thread to email.'),
+            'attachments' => Yii::t('app.f12.comments', 'Attachments'),
         ];
     }
 
@@ -135,7 +146,7 @@ class Comment extends \yii\db\ActiveRecord
         if ($this->create_user_id) {
             $model = $this->userObject;
             if (!$model)
-                Yii::$app->getModule('comments')->defaultAvatar;;
+                Yii::$app->getModule('comments')->defaultAvatar;
             return $model->commentatorAvatar;
         }
         return Yii::$app->getModule('comments')->defaultAvatar;
@@ -156,6 +167,9 @@ class Comment extends \yii\db\ActiveRecord
         return $this->author_email;
     }
 
+    /**
+     * @return CommentatorInterface
+     */
     public function getUserObject()
     {
         $classname = Yii::$app->getModule('comments')->userClass;
@@ -169,5 +183,31 @@ class Comment extends \yii\db\ActiveRecord
     {
         $this->status = CommentStatus::DELETED;
         return $this->save(true, ['status']);
+    }
+
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return [
+            'files' => [
+                'class' => FileBehaviour::class,
+                'attributes' => [
+                    'attachments' => [
+                        'title' => 'Файлы',
+                        'preview' => false,
+                        'multiply' => true,
+                        'showName' => true,
+                        'bricked' => true,
+                        'showControl' => true,
+                        'label' => false,
+                        'successFunction' => 'info("Файл загружен",1);',
+                        'errorFunction' => 'info(message,2);',
+                    ],
+                ]
+
+            ]
+        ];
     }
 }

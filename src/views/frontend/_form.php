@@ -11,6 +11,7 @@
  */
 
 use floor12\comments\Module;
+use floor12\files\components\FileInputWidget;
 use kartik\form\ActiveForm;
 use marqu3s\summernote\Summernote;
 use yii\helpers\Html;
@@ -23,6 +24,7 @@ $form = ActiveForm::begin([
 echo Html::tag('div', Yii::t('app.f12.comments', 'New comment'), ['class' => 'f12-comments-header']);
 
 if (Yii::$app->getModule('comments')->userMode == Module::MODE_GUESTS && Yii::$app->user->isGuest) { ?>
+
     <div class="row">
         <div class="col-xs-6">
             <?= $form->field($model, 'author_name')->label(false)->textInput([
@@ -35,22 +37,35 @@ if (Yii::$app->getModule('comments')->userMode == Module::MODE_GUESTS && Yii::$a
             ]); ?>
         </div>
     </div>
+
 <?php } ?>
 
 
-<?= Yii::$app->getModule('comments')->useWYSIWYG ?
-    $form->field($model, 'content')->label(false)->widget(Summernote::class, [
-        'clientOptions' => Yii::$app->getModule('comments')->summernoteClientOptions
-    ]) :
-    $form->field($model, 'content')->textarea([
-        'rows' => 5,
-        'placeholder' => Yii::t('app.f12.comments', 'enter the comment here...'),
-    ])->label(false);
+<?php
+if (Yii::$app->getModule('comments')->useWYSIWYG)
+    echo $form->field($model, 'content')
+        ->label(false)
+        ->widget(Summernote::class, [
+            'clientOptions' => Yii::$app->getModule('comments')->summernoteClientOptions
+        ]);
+else
+    echo $form->field($model, 'content')
+        ->label(false)
+        ->textarea([
+            'rows' => 5,
+            'placeholder' => Yii::t('app.f12.comments', 'enter the comment here...'),
+        ]);
 ?>
 
+<?php if (Yii::$app->getModule('comments')->allowSubscribe): ?>
     <div class="pull-left">
         <?= $form->field($model, 'subscribe')->checkbox() ?>
     </div>
+<?php endif; ?>
+
+<?php if (Yii::$app->getModule('comments')->allowAttachments): ?>
+    <?= $form->field($model, 'attachments')->widget(FileInputWidget::class, []) ?>
+<?php endif; ?>
 
     <div class="text-right">
         <?= Html::submitButton(Yii::t('app.f12.comments', 'Send'), ['class' => 'btn btn-primary']); ?>

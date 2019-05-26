@@ -33,24 +33,25 @@ class CommentApprove
         $this->_comment->update_user_id = $this->_identity->getId();
         $this->_comment->updated = time();
 
-        $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
-            Yii::$app
-                ->mailer
-                ->compose(
-                    ['html' => "@vendor/floor12/yii2-module-comments/src/mail/comment-approved-html.php"],
-                    ['comment' => $event->sender]
-                )
-                ->setFrom([Yii::$app->getModule('comments')->emailFromAddress => Yii::t('app.f12.comments', 'Сomment module email robot')])
-                ->setSubject(Yii::t('app.f12.comments', 'Your comment was approved.'))
-                ->setTo($this->_comment->email)
-                ->send();
-        });
+        if (Yii::$app->getModule('comments')->enableNotificator) {
+            $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
+                Yii::$app
+                    ->mailer
+                    ->compose(
+                        ['html' => "@vendor/floor12/yii2-module-comments/src/mail/comment-approved-html.php"],
+                        ['comment' => $event->sender]
+                    )
+                    ->setFrom([Yii::$app->getModule('comments')->emailFromAddress => Yii::t('app.f12.comments', 'Сomment module email robot')])
+                    ->setSubject(Yii::t('app.f12.comments', 'Your comment was approved.'))
+                    ->setTo($this->_comment->email)
+                    ->send();
+            });
 
-
-        // уведомляем подписчиков
-        $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
-            Yii::createObject(CommentInform::class, [$event->sender])->execute();
-        });
+            // уведомляем подписчиков
+            $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
+                Yii::createObject(CommentInform::class, [$event->sender])->execute();
+            });
+        }
 
 
         return $this->_comment->save(true, ['status', 'update_user_id', 'updated']);

@@ -40,6 +40,6 @@
   "autoload-dev": {
     "psr-4": {
       "floor12\\comments\\tests\\": "tests/"
-    },
+    }
   }
 }

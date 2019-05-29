@@ -1,10 +1,11 @@
 var f12CommentFormUrl;
 var f12CommentDeleteUrl;
 var f12CommentIndexUrl;
-var f12CommentMainParams;
 
-function f12CommentsLoadForm(params) {
+function f12CommentsLoadForm(event) {
     $('form.f12-comments-form').remove();
+
+    let params = $(event.target).parents('div.f12-comments').data('params');
 
     var block = $(params.block_id);
 
@@ -53,7 +54,6 @@ $(document).on('submit', '.f12-comments-form', function (event) {
         url: action,
         success: function (response) {
             id = form.parents('.f12-comments').find('.f12-comment-list').attr('id');
-            console.log(id);
             f12CommentsLoadList('#' + id);
             form.html('');
             info(response, 1);

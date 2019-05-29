@@ -86,14 +86,13 @@ class CommentsWidget extends Widget
         $this->view->registerJs("f12CommentIndexUrl = '{$this->_f12CommentIndexUrl}'");
         $this->view->registerJs("f12CommentFormUrl = '{$this->_f12CommentFormUrl}'");
         $this->view->registerJs("f12CommentDeleteUrl = '{$this->_f12CommentDeleteUrl}'");
-        $this->view->registerJs("f12CommentMainParams = {$formParams}");
 
 
         if ($this->showForm)
             $this->view->registerJs("f12CommentsLoadForm(f12CommentMainParams)", View::POS_READY, $this->_commentFormBlock_id);
         $this->view->registerJs("f12CommentsLoadList('#{$this->_commentListBlock_id}')", View::POS_READY, $this->_commentListBlock_id);
 
-        return Html::tag('div', $this->_html, ['class' => 'f12-comments']);
+        return Html::tag('div', $this->_html, ['class' => 'f12-comments', 'data-params' => $formParams]);
 
     }
 

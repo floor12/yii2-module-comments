@@ -13,9 +13,11 @@ use floor12\comments\logic\CommentUnsubscribe;
 use floor12\comments\models\Comment;
 use floor12\comments\Module;
 use floor12\editmodal\DeleteAction;
+use floor12\editmodal\EditModalAction;
 use Yii;
 use yii\helpers\Html;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class FrontendController extends Controller
 {
@@ -24,6 +26,11 @@ class FrontendController extends Controller
     private $_comments;
 
 
+    /**
+     * @param $object_id
+     * @param $classname
+     * @return string
+     */
     public function actionIndex($object_id, $classname): string
     {
         $this->_comments = Comment::find()
@@ -40,7 +47,8 @@ class FrontendController extends Controller
                     'model' => $comment,
                     'useAvatar' => Yii::$app->getModule('comments')->useAvatar,
                     'defaultAvatar' => Yii::$app->getModule('comments')->defaultAvatar,
-                    'allowAnswer' => !(Yii::$app->user->isGuest && Yii::$app->getModule('comments')->userMode == Module::MODE_ONLY_USERS)
+                    'allowAnswer' => !(Yii::$app->user->isGuest && Yii::$app->getModule('comments')->userMode == Module::MODE_ONLY_USERS),
+                    'allowEdit' => (Yii::$app->user->id == $comment->create_user_id || Yii::$app->user->can(Yii::$app->getModule('comments')->editRole))
                 ]);
         }
 
@@ -51,6 +59,13 @@ class FrontendController extends Controller
     }
 
 
+    /**
+     * @param null $classname
+     * @param int $object_id
+     * @param int $parent_id
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionForm($classname = NULL, $object_id = 0, $parent_id = 0)
     {
 
@@ -80,7 +95,13 @@ class FrontendController extends Controller
         return $this->renderAjax(Yii::$app->getModule('comments')->viewForm, ['model' => $model]);
     }
 
-
+    /**
+     * @param string $comment_id
+     * @param string $email
+     * @param string $hash
+     * @return string
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionUnsubscibe(string $comment_id, string $email, string $hash)
     {
         Yii::createObject(CommentUnsubscribe::class, [
@@ -101,8 +122,35 @@ class FrontendController extends Controller
             'delete' => [
                 'class' => DeleteAction::class,
                 'model' => Comment::class,
+                'access' => $this->allowEdit(Yii::$app->request->getBodyParam('id')),
                 'message' => Yii::t('app.f12.comments', 'The comment is delited.')
+            ],
+            'edit' => [
+                'class' => EditModalAction::class,
+                'model' => Comment::class,
+                'access' => $this->allowEdit(Yii::$app->request->get('id')),
+                'message' => Yii::t('app.f12.comments', 'The comment is updated.')
             ]
         ];
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws NotFoundHttpException
+     */
+    protected function allowEdit($id)
+    {
+        if (Yii::$app->user->can(Yii::$app->getModule('comments')->editRole))
+            return true;
+
+        $model = Comment::findOne($id);
+        if (!$model)
+            return false;
+
+        if ($model->create_user_id = Yii::$app->user->id)
+            return true;
+
+        return false;
     }
 }

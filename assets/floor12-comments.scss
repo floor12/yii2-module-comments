@@ -1,4 +1,3 @@
-
 .f12-comments-header {
   font-size: 150%;
   border-bottom: 1px #ccc solid;
@@ -10,10 +9,9 @@
 div.f12-comment-form-block {
   max-width: 650px;
   margin: 50px 0 20px 0;
-
-  form.f12-comments-form {
-    padding-bottom: 40px;
-  }
+}
+div.f12-comment-form-block form.f12-comments-form {
+  padding-bottom: 40px;
 }
 
 div.f12-comment-info-success {
@@ -28,6 +26,7 @@ div.f12-comment-info-success {
   padding: 2px 7px;
   color: #757575;
   border: 1px #ccc solid;
+  margin: 0 1px;
 }
 
 .f12-comment-button:hover {
@@ -36,79 +35,59 @@ div.f12-comment-info-success {
   color: #757575;
 }
 
-
-
 div.f12-comment-list {
   max-width: 650px;
   margin-bottom: 25px;
-
-  div.f12-comments-header {
-    //display: none;
-  }
-
-  div.f12-comment {
-    margin-top: 30px;
-
-    img.f12-comment-avatar {
-      width: 22px;
-      float: left;
-      margin: -1px 5px 0 0;
-      border: 1px #ccc solid;
-      border-radius: 2px;
-    }
-
-    div.f12-comment-name {
-      font-weight: bold;
-    }
-
-    div.f12-comment-date {
-      float: right;
-    }
-    div.f12-comment-content {
-      margin-top: 5px;
-    }
-
-    div.f12-comment-control {
-      transition: all 0.2s;
-      text-align: right;
-      opacity: 0;
-    }
-  }
-
-  div.f12-comment:hover {
-    div.f12-comment-control {
-      opacity: 1;
-    }
-  }
-
-  div.f12-subcomment {
-    margin-left: 30px;
-    margin-top: 10px;
-    border-left: 1px #ccc solid;
-    padding-left: 20px;
-
-    form.f12-comments-form {
-      margin: 32px 0 0 0;
-      padding-bottom: 40px;
-    }
-  }
-
+}
+div.f12-comment-list div.f12-comment {
+  margin-top: 30px;
+}
+div.f12-comment-list div.f12-comment img.f12-comment-avatar {
+  width: 22px;
+  float: left;
+  margin: -1px 5px 0 0;
+  border: 1px #ccc solid;
+  border-radius: 2px;
+}
+div.f12-comment-list div.f12-comment div.f12-comment-name {
+  font-weight: bold;
+}
+div.f12-comment-list div.f12-comment div.f12-comment-date {
+  float: right;
+}
+div.f12-comment-list div.f12-comment div.f12-comment-content {
+  margin-top: 5px;
+}
+div.f12-comment-list div.f12-comment div.f12-comment-control {
+  transition: all 0.2s;
+  text-align: right;
+  opacity: 0;
+}
+div.f12-comment-list div.f12-comment:hover div.f12-comment-control {
+  opacity: 1;
+}
+div.f12-comment-list div.f12-subcomment {
+  margin-left: 30px;
+  margin-top: 10px;
+  border-left: 1px #ccc solid;
+  padding-left: 20px;
+}
+div.f12-comment-list div.f12-subcomment form.f12-comments-form {
+  margin: 32px 0 0 0;
+  padding-bottom: 40px;
 }
 
-// админка коментов
 div.f12-comment-admin-object {
   margin: 32px 0 0 0;
   border-bottom: 1px #eee solid;
   padding: 4px 0 8px 10px;
   border-left: 4px #eee solid;
-
-  div.f12-comment-admin-object-header {
-    font-weight: bold;
-
-    div.f12-comment-admin-object-date {
-      float: right;
-    }
-  }
+}
+div.f12-comment-admin-object div.f12-comment-admin-object-header {
+  font-weight: bold;
+}
+div.f12-comment-admin-object div.f12-comment-admin-object-header div.f12-comment-admin-object-date {
+  float: right;
 }
 
 div.f12-comment-admin-sub {
@@ -134,3 +113,5 @@ div.f12-filter-block {
   margin-bottom: 45px;
   border: 1px #eee solid;
 }
+
+/*# sourceMappingURL=floor12-comments.scss.map */

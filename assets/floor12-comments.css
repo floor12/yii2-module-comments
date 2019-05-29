@@ -26,6 +26,7 @@ div.f12-comment-info-success {
   padding: 2px 7px;
   color: #757575;
   border: 1px #ccc solid;
+  margin: 0 1px;
 }
 
 .f12-comment-button:hover {

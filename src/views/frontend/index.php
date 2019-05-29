@@ -13,7 +13,7 @@
 ?>
 
 
-<button onclick="f12CommentsLoadForm(event); $(this).hide(); return false;"
+<button onclick="f12Comments.newComment(event); $(this).hide(); return false;"
         class="f12-comments-btn-add-new">
     <?= Yii::t('app.f12.comments', "Add new comment") ?>
 </button>

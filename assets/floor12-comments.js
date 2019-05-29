@@ -1,41 +1,86 @@
-var f12CommentFormUrl;
-var f12CommentDeleteUrl;
-var f12CommentIndexUrl;
+var f12Comments = {
 
-function f12CommentsLoadForm(event) {
-    $('form.f12-comments-form').remove();
+    formUrl: null,
 
-    let params = $(event.target).parents('div.f12-comments').data('params');
+    deleteUrl: null,
 
-    var block = $(params.block_id);
+    indexUrl: null,
 
-    $.ajax({
-        url: f12CommentFormUrl,
-        data: params,
-        success: function (response) {
-            block.html(response);
-        },
-        error: function (response) {
-            processError(response);
-        }
-    });
-}
+    updateUrl: null,
 
+    commentBackup: null,
 
-function f12CommentsLoadList(blockId) {
-    var block = $(blockId);
-    classname = block.data('classname');
-    object_id = block.data('object_id');
-    $.ajax({
-        url: f12CommentIndexUrl,
-        data: {classname: classname, object_id: object_id},
-        success: function (response) {
-            block.html(response);
-        },
-        error: function (response) {
-            processError(response);
-        }
-    });
+    newComment: function (event) {
+        let params = $(event.target).parents('div.f12-comments').data('params');
+        this.loadForm(params);
+    },
+
+    loadForm: function (params) {
+        $('form.f12-comments-form').remove();
+
+        var block = $(params.block_id);
+
+        $.ajax({
+            url: f12Comments.formUrl,
+            data: params,
+            success: function (response) {
+                block.html(response);
+            },
+            error: function (response) {
+                processError(response);
+            }
+        });
+    },
+
+    loadList: function (blockId) {
+        var block = $(blockId);
+        classname = block.data('classname');
+        object_id = block.data('object_id');
+        $.ajax({
+            url: f12Comments.indexUrl,
+            data: {classname: classname, object_id: object_id},
+            success: function (response) {
+                block.html(response);
+            },
+            error: function (response) {
+                processError(response);
+            }
+        });
+    },
+
+    delete: function (id) {
+        if (!confirm('Are you sure?'))
+            return false;
+
+        $.ajax({
+            method: 'DELETE',
+            data: {id: id},
+            url: f12Comments.deleteUrl,
+            success: function (response) {
+                $('div.f12-comment[data-key="' + id + '"]').fadeOut(300);
+            },
+            error: function (response) {
+                processError(response);
+            }
+
+        })
+    },
+
+    edit: function (id) {
+        $.ajax({
+            data: {id: id},
+            url: f12Comments.updateUrl,
+            success: function (response) {
+                f12Comments.commentBackup = $('div.f12-comment[data-key="' + id + '"]').html();
+                $('div.f12-comment[data-key="' + id + '"]').html(response);
+            },
+            error: function (response) {
+                processError(response);
+            }
+
+        })
+    }
+
 }
 
 
@@ -54,7 +99,7 @@ $(document).on('submit', '.f12-comments-form', function (event) {
         url: action,
         success: function (response) {
             id = form.parents('.f12-comments').find('.f12-comment-list').attr('id');
-            f12CommentsLoadList('#' + id);
+            f12Comments.loadList('#' + id);
             form.html('');
             info(response, 1);
             setTimeout(function () {

@@ -8,6 +8,7 @@
  * @var $model \floor12\comments\models\Comment
  * @var $useAvatar boolean
  * @var $allowAnswer boolean
+ * @var $allowEdit boolean
  */
 
 use floor12\files\components\FilesBlock;
@@ -33,10 +34,28 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
     ?>
 
     <div class="f12-comment-control">
-        <?= $allowAnswer ? Html::a(Yii::t('app.f12.comments', 'answer'), null, [
-            'class' => 'f12-comment-button f12-comment-button-answer',
-            'onclick' => "f12CommentsLoadForm({$params})"
-        ]) : NULL ?>
+
+        <?php
+
+        if ($allowAnswer)
+            echo Html::button(Yii::t('app.f12.comments', 'answer'), [
+                'class' => 'f12-comment-button f12-comment-button-answer',
+                'onclick' => "f12Comments.loadForm({$params})"
+            ]);
+
+        if ($allowEdit) {
+            echo Html::button(Yii::t('app.f12.comments', 'edit'), [
+                'class' => 'f12-comment-button f12-comment-button-edit',
+                'onclick' => "f12Comments.edit({$model->id})"
+            ]);
+
+            echo Html::button(Yii::t('app.f12.comments', 'delete'), [
+                'class' => 'f12-comment-button f12-comment-button-delete',
+                'onclick' => "f12Comments.delete({$model->id})"
+            ]);
+        }
+        ?>
+
     </div>
 
     <div class="" id="<?= $ansId ?>"></div>

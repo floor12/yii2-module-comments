@@ -17,6 +17,7 @@ return [
     'Parent comment not found.' => 'Родительский комментарий не найден.',
     'Only authorized user can create a comment.' => 'Только авторизованные пользователи могут оставлять комментарии.',
     'The comment is delited.' => 'Комментарий удален.',
+    'The comment is updated.' => 'Комментарий обновлен.',
     'search in comments...' => 'поиск по комментариям...',
     'any status' => 'все статус',
     'all types of objects' => 'все типы объектов',
@@ -49,5 +50,7 @@ return [
     'Author phone' => 'Номер телефона',
     'This field is required.' => 'Это поле обязательное',
     'Attachments' => 'Файлы',
-    'Add new comment' => 'Добавить комментарий'
+    'Add new comment' => 'Добавить комментарий',
+    'delete' => 'удалить',
+    'edit' => 'редактировать'
 ];

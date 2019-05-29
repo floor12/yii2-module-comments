@@ -34,6 +34,7 @@ class CommentsWidget extends Widget
     private $_f12CommentFormUrl;
     private $_f12CommentIndexUrl;
     private $_f12CommentDeleteUrl;
+    private $_f12CommentUpdateUrl;
 
 
     public function init()
@@ -42,6 +43,7 @@ class CommentsWidget extends Widget
         $this->_f12CommentIndexUrl = Url::toRoute(['/comments/frontend/index']);
         $this->_f12CommentFormUrl = Url::toRoute(['/comments/frontend/form']);
         $this->_f12CommentDeleteUrl = Url::toRoute(['/comments/frontend/delete']);
+        $this->_f12CommentUpdateUrl = Url::toRoute(['/comments/frontend/edit']);
 
         if (!$this->formPosition)
             $this->formPosition = Yii::$app->getModule('comments')->formPosition;
@@ -83,14 +85,15 @@ class CommentsWidget extends Widget
             'object_id' => $this->object_id,
         ]);
 
-        $this->view->registerJs("f12CommentIndexUrl = '{$this->_f12CommentIndexUrl}'");
-        $this->view->registerJs("f12CommentFormUrl = '{$this->_f12CommentFormUrl}'");
-        $this->view->registerJs("f12CommentDeleteUrl = '{$this->_f12CommentDeleteUrl}'");
+        $this->view->registerJs("f12Comments.indexUrl = '{$this->_f12CommentIndexUrl}'");
+        $this->view->registerJs("f12Comments.formUrl = '{$this->_f12CommentFormUrl}'");
+        $this->view->registerJs("f12Comments.deleteUrl = '{$this->_f12CommentDeleteUrl}'");
+        $this->view->registerJs("f12Comments.updateUrl = '{$this->_f12CommentUpdateUrl}'");
 
 
         if ($this->showForm)
-            $this->view->registerJs("f12CommentsLoadForm(f12CommentMainParams)", View::POS_READY, $this->_commentFormBlock_id);
-        $this->view->registerJs("f12CommentsLoadList('#{$this->_commentListBlock_id}')", View::POS_READY, $this->_commentListBlock_id);
+            $this->view->registerJs("f12Comments.loadForm({$formParams})", View::POS_READY, $this->_commentFormBlock_id);
+        $this->view->registerJs("f12Comments.loadList('#{$this->_commentListBlock_id}')", View::POS_READY, $this->_commentListBlock_id);
 
         return Html::tag('div', $this->_html, ['class' => 'f12-comments', 'data-params' => $formParams]);
 

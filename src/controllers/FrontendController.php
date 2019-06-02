@@ -8,14 +8,17 @@
 
 namespace floor12\comments\controllers;
 
+use floor12\comments\logic\CommentApprove;
 use floor12\comments\logic\CommentCreate;
 use floor12\comments\logic\CommentUnsubscribe;
 use floor12\comments\models\Comment;
+use floor12\comments\models\CommentStatus;
 use floor12\comments\Module;
 use floor12\editmodal\DeleteAction;
 use floor12\editmodal\EditModalAction;
 use Yii;
 use yii\helpers\Html;
+use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -33,11 +36,14 @@ class FrontendController extends Controller
      */
     public function actionIndex($object_id, $classname): string
     {
-        $this->_comments = Comment::find()
-            ->active()
+        $commetsQuery = Comment::find()
             ->byObject($classname, $object_id)
-            ->tree(Yii::$app->getModule('comments')->commentsOrder)
-            ->all();
+            ->tree(Yii::$app->getModule('comments')->commentsOrder);
+
+        if (!Yii::$app->user->can(Yii::$app->getModule('comments')->editRole))
+            $commetsQuery->active();
+
+        $this->_comments = $commetsQuery->all();
 
         $commentsTotal = sizeof($this->_comments);
 
@@ -47,7 +53,8 @@ class FrontendController extends Controller
                     'model' => $comment,
                     'useAvatar' => Yii::$app->getModule('comments')->useAvatar,
                     'defaultAvatar' => Yii::$app->getModule('comments')->defaultAvatar,
-                    'allowAnswer' => !(Yii::$app->user->isGuest && Yii::$app->getModule('comments')->userMode == Module::MODE_ONLY_USERS),
+                    'allowPublish' => $comment->status == CommentStatus::PENDING && Yii::$app->user->can(Yii::$app->getModule('comments')->editRole),
+//                    'allowAnswer' => $comment->status == CommentStatus::PUBLISHED && !(Yii::$app->user->isGuest && Yii::$app->getModule('comments')->userMode == Module::MODE_ONLY_USERS),
                     'allowEdit' => (Yii::$app->user->id == $comment->create_user_id || Yii::$app->user->can(Yii::$app->getModule('comments')->editRole))
                 ]);
         }
@@ -58,6 +65,24 @@ class FrontendController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string
+     * @throws BadRequestHttpException
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionApprove($id)
+    {
+        $model = Comment::findOne((int)$id);
+        if (!$model)
+            throw new NotFoundHttpException(Yii::t('app.f12.comments', 'The comment is not found.'));
+
+        if (!Yii::createObject(CommentApprove::class, [$model, Yii::$app->user->identity])->execute())
+            throw new BadRequestHttpException(Yii::t('app.f12.comments', 'Comment savign error.'));
+
+        return Yii::t('app.f12.comments', 'The comment is approved.');
+    }
 
     /**
      * @param null $classname

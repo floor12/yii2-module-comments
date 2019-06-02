@@ -35,6 +35,7 @@ class CommentsWidget extends Widget
     private $_f12CommentIndexUrl;
     private $_f12CommentDeleteUrl;
     private $_f12CommentUpdateUrl;
+    private $_f12CommentApproveUrl;
 
 
     public function init()
@@ -44,6 +45,7 @@ class CommentsWidget extends Widget
         $this->_f12CommentFormUrl = Url::toRoute(['/comments/frontend/form']);
         $this->_f12CommentDeleteUrl = Url::toRoute(['/comments/frontend/delete']);
         $this->_f12CommentUpdateUrl = Url::toRoute(['/comments/frontend/edit']);
+        $this->_f12CommentApproveUrl = Url::toRoute(['/comments/frontend/approve']);
 
         if (!$this->formPosition)
             $this->formPosition = Yii::$app->getModule('comments')->formPosition;
@@ -89,6 +91,7 @@ class CommentsWidget extends Widget
         $this->view->registerJs("f12Comments.formUrl = '{$this->_f12CommentFormUrl}'");
         $this->view->registerJs("f12Comments.deleteUrl = '{$this->_f12CommentDeleteUrl}'");
         $this->view->registerJs("f12Comments.updateUrl = '{$this->_f12CommentUpdateUrl}'");
+        $this->view->registerJs("f12Comments.approveUrl = '{$this->_f12CommentApproveUrl}'");
 
 
         if ($this->showForm)

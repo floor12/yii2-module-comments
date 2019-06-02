@@ -7,10 +7,11 @@
  * @var $this \yii\web\View
  * @var $model \floor12\comments\models\Comment
  * @var $useAvatar boolean
- * @var $allowAnswer boolean
+ * @var $allowPublish boolean
  * @var $allowEdit boolean
  */
 
+use floor12\comments\models\CommentStatus;
 use floor12\files\components\FilesBlock;
 use yii\helpers\Html;
 
@@ -18,7 +19,11 @@ $ansId = "commentAnswer{$model->id}";
 $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_id ?: $model->id])
 
 ?>
-<div data-key="<?= $model->id ?>" class="f12-comment <?php if ($model->parent_id) echo "f12-subcomment"; ?>">
+<div data-key="<?= $model->id ?>"
+     class="f12-comment
+     <?php if ($model->status == CommentStatus::PENDING) echo "f12-pending"; ?>
+     <?php if ($model->parent_id) echo "f12-subcomment"; ?>
+">
 
     <?= ($useAvatar) ? Html::img($model->avatar, ['alt' => $model->name, 'class' => 'f12-comment-avatar']) : NULL ?>
 
@@ -37,11 +42,16 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
 
         <?php
 
-        if ($allowAnswer)
-            echo Html::button(Yii::t('app.f12.comments', 'answer'), [
-                'class' => 'f12-comment-button f12-comment-button-answer',
-                'onclick' => "f12Comments.loadForm({$params})"
+        if ($allowPublish)
+            echo Html::button(Yii::t('app.f12.comments', 'approve'), [
+                'class' => 'f12-comment-button f12-comment-button-approve',
+                'onclick' => "f12Comments.approve({$model->id})"
             ]);
+
+        echo Html::button(Yii::t('app.f12.comments', 'answer'), [
+            'class' => 'f12-comment-button f12-comment-button-answer',
+            'onclick' => "f12Comments.loadForm({$params})"
+        ]);
 
         if ($allowEdit) {
             echo Html::button(Yii::t('app.f12.comments', 'edit'), [

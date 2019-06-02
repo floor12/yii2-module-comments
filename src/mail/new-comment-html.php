@@ -29,4 +29,4 @@ use yii\web\View;
 
 <?= Yii::t('app.f12.comments', 'To moderate it click') ?>
 
-<?= Html::a(Yii::t('app.f12.comments', 'this link'), $moderateLink) ?>.
+<?= Html::a(Yii::t('app.f12.comments', 'this link'), $comment->url) ?>.

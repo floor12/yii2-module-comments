@@ -8,6 +8,8 @@ var f12Comments = {
 
     updateUrl: null,
 
+    approveUrl: null,
+
     commentBackup: null,
 
     newComment: function (event) {
@@ -79,6 +81,21 @@ var f12Comments = {
             }
 
         })
+    },
+
+    approve: function (id) {
+        $.ajax({
+            url: f12Comments.approveUrl + "?id=" + id,
+            method: 'POST',
+            success: function (response) {
+                info(response, 1);
+                $('div.f12-comment[data-key="' + id + '"]').removeClass('f12-pending');
+            },
+            error: function (response) {
+                processError(response)
+            }
+        });
+
     }
 
 }

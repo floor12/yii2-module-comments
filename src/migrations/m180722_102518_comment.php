@@ -7,8 +7,10 @@ class m180722_102518_comment extends Migration
 {
     public function safeUp()
     {
-        $tableOptions = 'ENGINE=InnoDB';
-
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
         $this->createTable(Comment::tableName(), [
             'id' => $this->primaryKey(),
             'status' => $this->integer()->notNull()->comment('Статус'),

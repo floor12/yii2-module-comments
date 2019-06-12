@@ -127,7 +127,7 @@ class Module extends \yii\base\Module
         Yii::$app->i18n->translations['app.f12.comments'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'basePath' => '@vendor/floor12/yii2-module-comments/src/messages',
-            'sourceLanguage' => 'en-US',
+            'sourceLanguage' => 'en',
             'fileMap' => [
                 'app.f12.comments' => 'comments.php',
             ],

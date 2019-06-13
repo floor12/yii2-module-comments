@@ -45,6 +45,9 @@ class Module extends \yii\base\Module
     /** @var bool Allow attach files to comments */
     public $allowAttachments = false;
 
+    /** @var bool Show 'download all' button on files widget */
+    public $attachmentsDownloadAll = false;
+
     /**  @var string Switch comment form position: before or after comment list. */
     public $formPosition = self::FORM_POSITION_BEFORE_LIST;
 

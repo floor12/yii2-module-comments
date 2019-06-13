@@ -35,7 +35,7 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
 
     <?php
     if (Yii::$app->getModule('comments')->allowAttachments && $model->attachments)
-        echo FilesBlock::widget(['files' => $model->attachments])
+        echo FilesBlock::widget(['files' => $model->attachments, 'downloadAll' => Yii::$app->getModule('comments')->attachmentsDownloadAll])
     ?>
 
     <div class="f12-comment-control">

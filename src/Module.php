@@ -57,6 +57,9 @@ class Module extends \yii\base\Module
     /** @var string */
     public $editRole = 'admin';
 
+    /** @var string */
+    public $allowAttachmentsRole = null;
+
     /** @var string Pre- or post-moderation switch */
     public $moderationMode = self::MODE_PRE_MODERATION;
 
@@ -119,17 +122,36 @@ class Module extends \yii\base\Module
         $this->registerTranslations();
     }
 
-
+    /**
+     * Registring some i18n files
+     */
     public function registerTranslations()
     {
         Yii::$app->i18n->translations['app.f12.comments'] = [
             'class' => 'yii\i18n\PhpMessageSource',
             'basePath' => '@vendor/floor12/yii2-module-comments/src/messages',
-            'sourceLanguage' => 'en-US',
+            'sourceLanguage' => 'en',
             'fileMap' => [
                 'app.f12.comments' => 'comments.php',
             ],
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAttachmentsAllowed()
+    {
+        if (!$this->allowAttachments)
+            return false;
+
+        if (!$this->allowAttachmentsRole || $this->allowAttachmentsRole == '*')
+            return true;
+
+        if ($this->allowAttachmentsRole == '@' && !Yii::$app->user->isGuest)
+            return true;
+
+        return Yii::$app->user->can($this->allowAttachmentsRole);
     }
 
 }

@@ -117,7 +117,10 @@ class FrontendController extends Controller
                 return $result;
         }
 
-        return $this->renderAjax(Yii::$app->getModule('comments')->viewForm, ['model' => $model]);
+        return $this->renderAjax(Yii::$app->getModule('comments')->viewForm, [
+            'model' => $model,
+            'allowAttachments' => Yii::$app->getModule('comments')->isAttachmentsAllowed()
+        ]);
     }
 
     /**

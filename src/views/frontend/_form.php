@@ -6,7 +6,8 @@
  * Time: 21:09
  *
  * @var $this \yii\web\View
- * @var $model \floor12\comments\models\Comment
+ * @var $this \yii\web\View
+ * @var $allowAttachments boolean
  *
  */
 
@@ -57,14 +58,15 @@ else
         ]);
 ?>
 
+<?php if (Yii::$app->getModule('comments')->isAttachmentsAllowed()): ?>
+    <?= $form->field($model, 'attachments')->widget(FileInputWidget::class, []) ?>
+<?php endif; ?>
+
+
 <?php if (Yii::$app->getModule('comments')->allowSubscribe): ?>
     <div class="pull-left">
         <?= $form->field($model, 'subscribe')->checkbox() ?>
     </div>
-<?php endif; ?>
-
-<?php if (Yii::$app->getModule('comments')->allowAttachments): ?>
-    <?= $form->field($model, 'attachments')->widget(FileInputWidget::class, []) ?>
 <?php endif; ?>
 
     <div class="text-right">

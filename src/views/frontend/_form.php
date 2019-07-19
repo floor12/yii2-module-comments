@@ -13,9 +13,9 @@
 
 use floor12\comments\Module;
 use floor12\files\components\FileInputWidget;
-use kartik\form\ActiveForm;
 use marqu3s\summernote\Summernote;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 $form = ActiveForm::begin([
     'id' => md5(rand(999, 99999)),

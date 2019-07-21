@@ -22,6 +22,7 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
 <div data-key="<?= $model->id ?>"
      class="f12-comment
      <?php if ($model->status == CommentStatus::PENDING) echo "f12-pending"; ?>
+     <?php if ($model->status == CommentStatus::DELETED) echo "f12-deleted"; ?>
      <?php if ($model->parent_id) echo "f12-subcomment"; ?>
 ">
 

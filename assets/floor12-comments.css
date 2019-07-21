@@ -126,6 +126,10 @@ div.f12-filter-block {
   border: 1px #eee solid;
 }
 
+div.f12-deleted {
+  opacity: 0.4;
+}
+
 div.f12-pending {
   background-color: #f1f0ec;
   padding: 10px;

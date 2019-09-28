@@ -146,7 +146,7 @@ class Comment extends \yii\db\ActiveRecord
         if ($this->create_user_id) {
             $model = $this->userObject;
             if (!$model)
-                Yii::$app->getModule('comments')->defaultAvatar;
+                return Yii::$app->getModule('comments')->defaultAvatar;
             return $model->commentatorAvatar;
         }
         return Yii::$app->getModule('comments')->defaultAvatar;

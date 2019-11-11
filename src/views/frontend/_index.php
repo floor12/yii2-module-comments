@@ -12,7 +12,7 @@
  */
 
 use floor12\comments\models\CommentStatus;
-use floor12\files\components\FilesBlock;
+use floor12\files\components\FileListWidget;
 use yii\helpers\Html;
 
 $ansId = "commentAnswer{$model->id}";
@@ -36,7 +36,7 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
 
     <?php
     if (Yii::$app->getModule('comments')->allowAttachments && $model->attachments)
-        echo FilesBlock::widget(['files' => $model->attachments, 'downloadAll' => Yii::$app->getModule('comments')->attachmentsDownloadAll])
+        echo FileListWidget::widget(['files' => $model->attachments, 'downloadAll' => Yii::$app->getModule('comments')->attachmentsDownloadAll])
     ?>
 
     <div class="f12-comment-control">

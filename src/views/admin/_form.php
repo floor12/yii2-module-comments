@@ -38,8 +38,11 @@ $form = ActiveForm::begin([
             <div class="col-md-4">
                 <?= $form->field($model, 'author_email') ?>
             </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'author_phone') ?>
+            </div>
         <?php endif; ?>
-        <div class="col-md-4">
+        <div class="col-md-12">
             <?= $form->field($model, 'status')->dropDownList(CommentStatus::listData()) ?>
         </div>
     </div>

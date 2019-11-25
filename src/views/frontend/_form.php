@@ -5,16 +5,18 @@
  * Date: 29.07.2018
  * Time: 21:09
  *
- * @var $this \yii\web\View
- * @var $this \yii\web\View
+ * @var $this View
+ * @var $model Comment
  * @var $allowAttachments boolean
  *
  */
 
+use floor12\comments\models\Comment;
 use floor12\comments\Module;
 use floor12\files\components\FileInputWidget;
 use marqu3s\summernote\Summernote;
 use yii\helpers\Html;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 
 $form = ActiveForm::begin([
@@ -27,14 +29,19 @@ echo Html::tag('div', Yii::t('app.f12.comments', 'New comment'), ['class' => 'f1
 if (Yii::$app->getModule('comments')->userMode == Module::MODE_GUESTS && Yii::$app->user->isGuest) { ?>
 
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
             <?= $form->field($model, 'author_name')->label(false)->textInput([
                 'placeholder' => Yii::t('app.f12.comments', 'name...'),
             ]); ?>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-4">
             <?= $form->field($model, 'author_email')->label(false)->textInput([
                 'placeholder' => Yii::t('app.f12.comments', 'email...'),
+            ]); ?>
+        </div>
+        <div class="col-xs-4">
+            <?= $form->field($model, 'author_phone')->label(false)->textInput([
+                'placeholder' => Yii::t('app.f12.comments', 'phone...'),
             ]); ?>
         </div>
     </div>

@@ -33,7 +33,9 @@ var f12Comments = {
             }
         });
     },
-
+    expand: (event) => {
+        $(event.target).parents('.f12-comments').find('.object-comments').addClass('opened');
+    },
     loadList: function (blockId) {
         var block = $(blockId);
         classname = block.data('classname');

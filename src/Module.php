@@ -33,6 +33,9 @@ class Module extends \yii\base\Module
     const ORDER_NEW_FIRST = '-';
     const ORDER_OLD_FIRST = '+';
 
+    /** @var int|NULL Use null if rating is disabled or int value as maximum rating value, for example: 5  */
+    public $ratingMaxValue = 5;
+
     /** @var null Classname of comment postprocessor */
     public $commentPostProcessor = null;
 
@@ -118,7 +121,7 @@ class Module extends \yii\base\Module
      */
     public function init()
     {
-        $this->fontAwesome = Yii::createObject($this->fontAwesome);
+//        $this->fontAwesome = Yii::createObject($this->fontAwesome);
         $this->registerTranslations();
     }
 

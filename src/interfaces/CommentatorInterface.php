@@ -37,9 +37,9 @@ interface CommentatorInterface
      *          return $this->avatar->fullpath;
      *      }
      *
-     * @return string
+     * @return string|NULL
      */
-    public function getCommentatorAvatar(): string;
+    public function getCommentatorAvatar(): ?string;
 
     /** Возращаем строку содержащую email автора.
      *  Пример реализации
@@ -52,7 +52,6 @@ interface CommentatorInterface
      * @return string
      */
     public function getCommentatorEmail(): string;
-
 
 
 }

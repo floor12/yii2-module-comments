@@ -28,6 +28,7 @@ class FrontendController extends Controller
     private $_commentsRendered;
     private $_comments;
 
+    
 
     /**
      * @param $object_id
@@ -38,9 +39,11 @@ class FrontendController extends Controller
     {
         $commetsQuery = Comment::find()
             ->byObject($classname, $object_id)
-            ->tree(Yii::$app->getModule('comments')->commentsOrder);
+            ->tree($this->module->commentsOrder);
 
-        if (!Yii::$app->user->can(Yii::$app->getModule('comments')->editRole))
+        $ratingMaxValue = $this->module->ratingMaxValue;
+        
+        if (!Yii::$app->user->can($this->module->editRole))
             $commetsQuery->active();
 
         $this->_comments = $commetsQuery->all();
@@ -55,7 +58,8 @@ class FrontendController extends Controller
                     'defaultAvatar' => Yii::$app->getModule('comments')->defaultAvatar,
                     'allowPublish' => $comment->status == CommentStatus::PENDING && Yii::$app->user->can(Yii::$app->getModule('comments')->editRole),
 //                    'allowAnswer' => $comment->status == CommentStatus::PUBLISHED && !(Yii::$app->user->isGuest && Yii::$app->getModule('comments')->userMode == Module::MODE_ONLY_USERS),
-                    'allowEdit' => (Yii::$app->user->id == $comment->create_user_id || Yii::$app->user->can(Yii::$app->getModule('comments')->editRole))
+                    'allowEdit' => (Yii::$app->user->id == $comment->create_user_id || Yii::$app->user->can(Yii::$app->getModule('comments')->editRole)),
+                    'ratingMaxValue' => $ratingMaxValue
                 ]);
         }
 

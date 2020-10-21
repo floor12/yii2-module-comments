@@ -27,6 +27,7 @@ use yii\db\ActiveRecord;
  * @property string $author_name Имя автора комментария
  * @property string $author_email Email автора комментария
  * @property string $author_phone Телефон автора комментария
+ * @property int $rating Оценка в комментарии
  *
  * @property string $avatar Имя автора комментария
  * @property string $name  Аватар автора комментария

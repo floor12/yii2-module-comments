@@ -5,15 +5,18 @@
  * Date: 04.08.2018
  * Time: 14:37
  *
- * @var $this \yii\web\View
- * @var $model \floor12\comments\models\Comment
- * @var $module \floor12\comments\Module
+ * @var $this View
+ * @var $model Comment
+ * @var $module Module
  */
 
 use floor12\comments\assets\IconHelper;
+use floor12\comments\models\Comment;
 use floor12\comments\models\CommentStatus;
+use floor12\comments\Module;
 use floor12\editmodal\EditModalHelper;
 use yii\helpers\Html;
+use yii\web\View;
 
 ?>
 
@@ -51,7 +54,7 @@ use yii\helpers\Html;
         <?php if ($module->ratingMaxValue && $model->rating): ?>
             <div class="f12-comment-rating"><?= $model->rating ?>/<?= $module->ratingMaxValue ?></div>
         <?php endif; ?>
-        <div class="f12-comment-date"><?= \Yii::$app->formatter->asDatetime($model->created) ?></div>
+        <div class="f12-comment-date"><?= Yii::$app->formatter->asDatetime($model->created) ?></div>
         <?php if ($model->getCommentObject()): ?>
             <div class="small">
                 <?= Html::a($model->getCommentObject()->getHumanReadbleObjectName(), $model->url, [

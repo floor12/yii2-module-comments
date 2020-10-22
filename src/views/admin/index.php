@@ -5,16 +5,19 @@
  * Date: 04.08.2018
  * Time: 14:18
  *
- * @var $this \yii\web\View
- * @var $model \floor12\comments\models\CommentFilter
+ * @var $this View
+ * @var $model CommentFilter
  * @var $adminTitle string|NULL
- * @var $module \floor12\comments\Module
+ * @var $module Module
  */
 
 use floor12\comments\assets\CommentsAdminAsset;
+use floor12\comments\models\CommentFilter;
 use floor12\comments\models\CommentStatus;
+use floor12\comments\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;

@@ -2,6 +2,7 @@
 
 namespace floor12\comments\models;
 
+use yii\db\ActiveQuery;
 use yii\db\Expression;
 
 /**
@@ -9,7 +10,7 @@ use yii\db\Expression;
  *
  * @see Comment
  */
-class CommentQuery extends \yii\db\ActiveQuery
+class CommentQuery extends ActiveQuery
 {
     /** Published comments
      * @return CommentQuery

@@ -5,10 +5,13 @@
  * Date: 05.12.2016
  * Time: 16:20
  *
- * @var $this \yii\web\View
- * @var $comments \common\models\Comment[]
+ * @var $this View
+ * @var $comments Comment[]
  * @var $commentsTotal integer
  */
+
+use common\models\Comment;
+use yii\web\View;
 
 ?>
 

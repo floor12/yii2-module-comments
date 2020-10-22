@@ -33,10 +33,10 @@ use yii\db\ActiveRecord;
  * @property string $avatar Имя автора комментария
  * @property string $name  Аватар автора комментария
  * @property string $email  Email автора комментария
- * @property ActiveRecord $userObject()  Объект автора
+ * @property CommentatorInterface $userObject()  Объект автора
  * @property File[] $attachments  Приложенные файлы
  */
-class Comment extends \yii\db\ActiveRecord
+class Comment extends ActiveRecord
 {
     const SCENARIO_GUEST = 'guest';
     const SUBSCRIBED = '1';
@@ -96,10 +96,8 @@ class Comment extends \yii\db\ActiveRecord
      */
     public function requiredany($attribute)
     {
-        die($attribute);
         if (!$this->author_email && !$this->author_phone)
             $this->addError($attribute, Yii::t('app.f12.comments', 'Enter email or phone number'));
-
     }
 
     /**
@@ -135,7 +133,7 @@ class Comment extends \yii\db\ActiveRecord
             $model = $this->userObject;
             if (!$model)
                 return Yii::t('app.f12.comments', 'Deleted user');
-            return $model->commentatorName;
+            return $model->getCommentatorName();
         }
         return $this->author_name;
     }
@@ -149,7 +147,7 @@ class Comment extends \yii\db\ActiveRecord
             $model = $this->userObject;
             if (!$model)
                 return Yii::$app->getModule('comments')->defaultAvatar;
-            return $model->commentatorAvatar;
+            return $model->getCommentatorAvatar();
         }
         return Yii::$app->getModule('comments')->defaultAvatar;
 
@@ -164,7 +162,7 @@ class Comment extends \yii\db\ActiveRecord
             $model = $this->userObject;
             if (!$model)
                 return Yii::t('app.f12.comments', 'Deleted user');
-            return $model->commentatorEmail;
+            return $model->getCommentatorEmail();
         }
         return $this->author_email;
     }

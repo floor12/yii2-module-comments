@@ -17,6 +17,7 @@ use floor12\comments\Module;
 use floor12\editmodal\DeleteAction;
 use floor12\editmodal\EditModalAction;
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -74,7 +75,7 @@ class FrontendController extends Controller
      * @return string
      * @throws BadRequestHttpException
      * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function actionApprove($id)
     {
@@ -93,7 +94,7 @@ class FrontendController extends Controller
      * @param int $object_id
      * @param int $parent_id
      * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function actionForm($classname = NULL, $object_id = 0, $parent_id = 0)
     {
@@ -132,7 +133,7 @@ class FrontendController extends Controller
      * @param string $email
      * @param string $hash
      * @return string
-     * @throws \yii\base\InvalidConfigException
+     * @throws InvalidConfigException
      */
     public function actionUnsubscibe(string $comment_id, string $email, string $hash)
     {

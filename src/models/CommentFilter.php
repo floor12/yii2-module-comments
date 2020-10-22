@@ -9,6 +9,7 @@
 namespace floor12\comments\models;
 
 
+use Throwable;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -61,7 +62,7 @@ class CommentFilter extends Model
             try {
                 $readbleName = $className::getHumanReadbleModelName();
                 $classNames[$className] = $readbleName;
-            } catch (\Throwable $exception) {
+            } catch (Throwable $exception) {
                 Yii::error($exception->getMessage());
             }
         }

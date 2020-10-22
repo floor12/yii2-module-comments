@@ -28,7 +28,7 @@ class CommentUpdate
         $this->_comment->load($this->_data, '');
 
         if ($this->_data['content'])
-            $this->_comment->content = \Yii::createObject(PostContentPrepare::class, [$this->_data['content']])->execute();
+            $this->_comment->content = Yii::createObject(PostContentPrepare::class, [$this->_data['content']])->execute();
 
 
         if ($this->_comment->parent_id) {

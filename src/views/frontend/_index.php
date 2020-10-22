@@ -4,16 +4,18 @@
  * User: floor12
  * Date: 30.07.2018
  * Time: 16:14
- * @var $this \yii\web\View
- * @var $model \floor12\comments\models\Comment
+ * @var $this View
+ * @var $model Comment
  * @var $useAvatar boolean
  * @var $allowPublish boolean
  * @var $allowEdit boolean
  */
 
+use floor12\comments\models\Comment;
 use floor12\comments\models\CommentStatus;
 use floor12\files\components\FileListWidget;
 use yii\helpers\Html;
+use yii\web\View;
 
 $ansId = "commentAnswer{$model->id}";
 $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_id ?: $model->id])
@@ -28,7 +30,7 @@ $params = json_encode(['block_id' => "#{$ansId}", 'parent_id' => $model->parent_
 
     <?= ($useAvatar) ? Html::img($model->avatar, ['alt' => $model->name, 'class' => 'f12-comment-avatar']) : NULL ?>
 
-    <div class="f12-comment-date"><?= \Yii::$app->formatter->asDatetime($model->created) ?></div>
+    <div class="f12-comment-date"><?= Yii::$app->formatter->asDatetime($model->created) ?></div>
     <div class="f12-comment-name"><?= $model->name ?></div>
     <div class="f12-comment-content">
         <?= Yii::$app->getModule('comments')->useWYSIWYG ? $model->content : Html::tag('p', nl2br($model->content)); ?>

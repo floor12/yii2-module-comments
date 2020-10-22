@@ -87,7 +87,8 @@ class Comment extends ActiveRecord
             [['create_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['create_user_id' => 'id']],
             [['update_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['update_user_id' => 'id']],
             [['attachments'], 'file', 'maxFiles' => 100],
-            ['attachments_ids', 'safe']
+            ['attachments_ids', 'safe'],
+            ['rating', 'integer', 'min' => 1, 'max' => 5]
         ];
     }
 
@@ -121,6 +122,7 @@ class Comment extends ActiveRecord
             'Author Phone' => Yii::t('app.f12.comments', 'Author phone'),
             'subscribe' => Yii::t('app.f12.comments', 'Send me new comments in this thread to email.'),
             'attachments' => Yii::t('app.f12.comments', 'Attachments'),
+            'rating' => Yii::t('app.f12.comments', 'Rating'),
         ];
     }
 

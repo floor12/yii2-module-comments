@@ -137,6 +137,53 @@ div.f12-pending {
     #comments-list-view > div.summary {
       width: 100%; } }
 
+div.f12-rating-field {
+  position: relative;
+  width: 10em;
+  height: 2em;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 19'%3E%3Cpath fill='%239b9b9b' d='M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z'/%3E%3C/svg%3E");
+  background-size: 2em auto;
+  background-repeat: repeat-x;
+  /* Options */ }
+  div.f12-rating-field input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    height: 2em;
+    font-size: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-size: 2em auto;
+    background-repeat: repeat-x; }
+  div.f12-rating-field input:focus {
+    outline: none; }
+  div.f12-rating-field input:hover,
+  div.f12-rating-field input:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 19'%3E%3Cpath fill='%237ed321' d='M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z'/%3E%3C/svg%3E"); }
+  div.f12-rating-field input:hover ~ input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 19'%3E%3Cpath fill='%239b9b9b' d='M10 0l2.36 7.28L20 7.25l-6.19 4.47L16.19 19 10 14.48 3.83 19l2.36-7.28L0 7.25l7.66.03z'/%3E%3C/svg%3E"); }
+  div.f12-rating-field input:nth-of-type(1) {
+    z-index: 5;
+    width: 2em; }
+  div.f12-rating-field input:nth-of-type(2) {
+    z-index: 4;
+    width: 4em; }
+  div.f12-rating-field input:nth-of-type(3) {
+    z-index: 3;
+    width: 6em; }
+  div.f12-rating-field input:nth-of-type(4) {
+    z-index: 2;
+    width: 8em; }
+  div.f12-rating-field input:nth-of-type(5) {
+    z-index: 1;
+    width: 10em; }
+
+div.f12-rating-field:focus-within {
+  outline: 0.2em solid #4a90e2;
+  outline-offset: 0.2em; }
+
 /*# sourceMappingURL=floor12-comments.scss.map */
 
 /*# sourceMappingURL=floor12-comments.css.map */

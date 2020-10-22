@@ -19,7 +19,7 @@ return [
     'The comment is delited.' => 'Комментарий удален.',
     'The comment is updated.' => 'Комментарий обновлен.',
     'search in comments...' => 'поиск по комментариям...',
-    'any status' => 'все статус',
+    'any status' => 'все статусы',
     'all types of objects' => 'все типы объектов',
     'Edit this comment' => 'Редактировать этот комментарий',
     'Delete this comment' => 'Удалить этот комментарий',
@@ -28,6 +28,7 @@ return [
     'Cancel' => 'Отмена',
     'Comment update' => 'Редактирование комментария',
     'Status' => 'Статус',
+    'Rating' => 'Оценка',
     'Author name' => 'Имя автора',
     'Author email' => 'Email автора',
     'Comment text' => 'Текст комментария',
@@ -58,4 +59,5 @@ return [
     'name...' => 'имя...',
     'phone...' => 'телефон...',
     'email...' => 'почта...',
+    'Subscribe author of this comment to the thread' => 'Подписать автора этого комментария на ветку'
 ];

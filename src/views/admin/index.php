@@ -24,6 +24,7 @@ use yii\widgets\Pjax;
 
 CommentsAdminAsset::register($this);
 
+$this->title = $adminTitle ?: Yii::t('app.f12.comments', 'Comments');
 $f12CommentApproveUrl = Url::toRoute(['/comments/admin/approve']);
 $this->registerJs("f12CommentApproveUrl = '{$f12CommentApproveUrl}'");
 
@@ -33,7 +34,7 @@ $form = ActiveForm::begin([
     'options' => ['class' => 'f12-form-autosubmit', 'data-container' => '#items']
 ]);
 
-echo Html::tag('h1', $adminTitle ?: Yii::t('app.f12.comments', 'Comments'));
+echo Html::tag('h1', $this->title);
 
 ?>
 

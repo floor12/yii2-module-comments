@@ -6,11 +6,13 @@
  * Time: 16:36
  *
  * @var $this View
- * @var $model CommentStatus
+ * @var $model Comment
  */
 
+use floor12\comments\models\Comment;
 use floor12\comments\models\CommentStatus;
-use marqu3s\summernote\Summernote;
+use floor12\comments\widgets\StarRatingWidget;
+use floor12\summernote\Summernote;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
@@ -23,7 +25,6 @@ $form = ActiveForm::begin([
 
 ?>
 
-
 <div class="modal-header">
     <h2><?= Yii::t('app.f12.comments', 'Comment update') ?></h2>
 </div>
@@ -31,8 +32,8 @@ $form = ActiveForm::begin([
 
     <?= $form->errorSummary($model); ?>
 
-    <div class="row">
-        <?php if (!$model->create_user_id): ?>
+    <?php if (!$model->create_user_id): ?>
+        <div class="row">
             <div class="col-md-4">
                 <?= $form->field($model, 'author_name') ?>
             </div>
@@ -42,9 +43,15 @@ $form = ActiveForm::begin([
             <div class="col-md-4">
                 <?= $form->field($model, 'author_phone') ?>
             </div>
-        <?php endif; ?>
-        <div class="col-md-12">
+        </div>
+    <?php endif; ?>
+
+    <div class="row">
+        <div class="col-md-8">
             <?= $form->field($model, 'status')->dropDownList(CommentStatus::listData()) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'rating')->widget(StarRatingWidget::class) ?>
         </div>
     </div>
 
@@ -54,7 +61,10 @@ $form = ActiveForm::begin([
         ]) :
         $form->field($model, 'content')->textarea(['rows' => '6']) ?>
 
-    <?= $form->field($model, 'subscribe')->checkbox() ?>
+    <?= $form->field($model, 'subscribe')
+        ->checkbox([
+            'label' => Yii::t('app.f12.comments', 'Subscribe author of this comment to the thread')
+        ]) ?>
 
 </div>
 

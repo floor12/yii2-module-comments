@@ -10,6 +10,7 @@ namespace floor12\comments\models;
 
 
 use Throwable;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -18,7 +19,7 @@ class CommentFilter extends Model
     public $status;
     public $filter;
     public $class;
-    public $order;
+    public $order = CommentOrder::FIRST_NEWEST;
     public $object_id;
 
     private $_query;
@@ -26,7 +27,7 @@ class CommentFilter extends Model
     public function rules()
     {
         return [
-            [['status', 'object_id'], 'integer'],
+            [['status', 'object_id', 'order'], 'integer'],
             [['filter', 'class'], 'string']
         ];
     }
@@ -34,7 +35,7 @@ class CommentFilter extends Model
     public function dataProvider()
     {
         $this->_query = Comment::find()
-            ->tree($this->order)
+            ->tree(CommentOrder::getOrderSign((int)$this->order))
             ->andFilterWhere(['=', 'status', $this->status])
             ->andFilterWhere(['=', 'object_id', $this->object_id])
             ->andFilterWhere(['LIKE', 'content', $this->filter])

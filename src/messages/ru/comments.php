@@ -59,5 +59,7 @@ return [
     'name...' => 'имя...',
     'phone...' => 'телефон...',
     'email...' => 'почта...',
-    'Subscribe author of this comment to the thread' => 'Подписать автора этого комментария на ветку'
+    'Subscribe author of this comment to the thread' => 'Подписать автора этого комментария на ветку',
+    'Oldest first' => 'Сначала старый',
+    'Newest first' => 'Сначала новые',
 ];

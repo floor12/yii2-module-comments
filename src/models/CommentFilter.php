@@ -44,13 +44,27 @@ class CommentFilter extends Model
         ]);
     }
 
-    public function getClasses()
+    public function getCommentObjectClasses(): array
     {
-        return Comment::find()
+        $classNames = Comment::find()
             ->distinct()
             ->select('class')
             ->orderBy('class')
             ->indexBy('class')
             ->column();
+
+        if (empty($classNames)) {
+            return [];
+        }
+
+        foreach ($classNames as $className) {
+            try {
+                $readbleName = $className::getHumanReadbleModelName();
+                $classNames[$className] = $readbleName;
+            } catch (\Throwable $exception) {
+                Yii::error($exception->getMessage());
+            }
+        }
+        return $classNames;
     }
 }

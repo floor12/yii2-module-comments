@@ -8,11 +8,9 @@
 
 namespace floor12\comments\interfaces;
 
-/** Этот интерфейс необходимо имплементировать тем моделям ActiveRecord проекта,
+/**
+ * Этот интерфейс необходимо имплементировать тем моделям ActiveRecord проекта,
  *  которые могут оставлять комментарии как пользователи.
- * Interface MailingRecipientInterface
- * @package floor12\mailing\interfaces
- * @property string $commentatorName
  */
 interface CommentatorInterface
 {

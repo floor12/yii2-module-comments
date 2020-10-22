@@ -7,6 +7,8 @@
  *
  * @var $this \yii\web\View
  * @var $model \floor12\comments\models\CommentFilter
+ * @var $adminTitle string|NULL
+ * @var $module \floor12\comments\Module
  */
 
 use floor12\comments\assets\CommentsAdminAsset;
@@ -28,7 +30,7 @@ $form = ActiveForm::begin([
     'options' => ['class' => 'f12-form-autosubmit', 'data-container' => '#items']
 ]);
 
-echo Html::tag('h1', Yii::t('app.f12.comments', 'Comments'));
+echo Html::tag('h1', $adminTitle ?: Yii::t('app.f12.comments', 'Comments'));
 
 ?>
 
@@ -41,21 +43,25 @@ echo Html::tag('h1', Yii::t('app.f12.comments', 'Comments'));
                 <?= $form->field($model, 'status')->label(false)->dropDownList(CommentStatus::listData(), ['prompt' => Yii::t('app.f12.comments', 'any status')]) ?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 'class')->label(false)->dropDownList($model->classes, ['prompt' => Yii::t('app.f12.comments', 'all types of objects')]) ?>
+                <?= $form->field($model, 'class')->label(false)->dropDownList($model->getCommentObjectClasses(), ['prompt' => Yii::t('app.f12.comments', 'all types of objects')]) ?>
             </div>
 
         </div>
     </div>
 <?php
-ActiveForm::end();
 
+ActiveForm::end();
 
 Pjax::begin(['id' => 'items']);
 
 echo ListView::widget([
+    'id' => 'comments-list-view',
     'dataProvider' => $model->dataProvider(),
-    'itemView' => Yii::$app->getModule('comments')->viewAdminIndexItem,
-    'layout' => '{items}{pager}{summary}'
+    'itemView' => $module->viewAdminIndexItem,
+    'layout' => '{items}{pager}{summary}',
+    'viewParams' => [
+        'module' => $module
+    ]
 ]);
 
 Pjax::end();

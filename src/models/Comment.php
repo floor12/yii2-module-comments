@@ -3,6 +3,7 @@
 namespace floor12\comments\models;
 
 use floor12\comments\interfaces\CommentatorInterface;
+use floor12\comments\interfaces\CommentObjectInterface;
 use floor12\files\components\FileBehaviour;
 use floor12\files\models\File;
 use floor12\phone\PhoneValidator;
@@ -174,6 +175,15 @@ class Comment extends \yii\db\ActiveRecord
     public function getUserObject()
     {
         $classname = Yii::$app->getModule('comments')->userClass;
+        return $classname::findOne($this->create_user_id);
+    }
+
+    /**
+     * @return CommentObjectInterface
+     */
+    public function getCommentObject()
+    {
+        $classname = $this->class;
         return $classname::findOne($this->create_user_id);
     }
 

@@ -89,33 +89,58 @@ div.f12-comment-list div.f12-subcomment form.f12-comments-form {
 
 div.f12-comment-admin-object {
   margin: 32px 0 0 0;
-  border-bottom: 1px #eee solid;
-  padding: 4px 0 8px 10px;
-  border-left: 4px #eee solid;
+
+  div.f12-comment-admin-object-header {
+    margin-bottom: 15px;
+
+    div.f12-comment-name {
+      font-weight: 500;
+    }
+
+    .f12-comment-admin-object-control {
+      float: right;
+    }
+
+    .f12-comment-rating {
+      background: #999;
+      color: white;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 400;
+      margin: 6px 0;
+      display: inline-block;
+    }
+
+    .f12-comment-date {
+      display: inline-block;
+      color: #888;
+    }
+  }
 }
 
-div.f12-comment-admin-object div.f12-comment-admin-object-header {
-  font-weight: bold;
-}
-
-div.f12-comment-admin-object div.f12-comment-admin-object-header div.f12-comment-admin-object-date {
-  float: right;
-}
 
 div.f12-comment-admin-sub {
   margin: 1px 0 0 51px;
 }
 
+div.f12-comment-admin-object-status {
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin: 0 10px 0 0;
+  border-radius: 3px;
+}
+
 div.f12-comment-admin-object-status0 {
-  border-left-color: #448a1638;
+  background: #b3dd1d;
 }
 
 div.f12-comment-admin-object-status1 {
-  border-left-color: #58168a38;
+  background: #56c1cc;
 }
 
 div.f12-comment-admin-object-status2 {
-  border-left-color: #8a261645;
+  background: #c83407;
   opacity: 0.7;
 }
 
@@ -137,6 +162,22 @@ div.f12-pending {
 
   .f12-comment-button-answer {
     display: none;
+  }
+}
+
+#comments-list-view {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media (min-width: 1200px) {
+    > div {
+      width: calc(50% - 25px);
+    }
+
+    > div.summary {
+      width: 100%;
+    }
   }
 }
 

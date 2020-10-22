@@ -33,8 +33,11 @@ class Module extends \yii\base\Module
     const ORDER_NEW_FIRST = '-';
     const ORDER_OLD_FIRST = '+';
 
-    /** @var int|NULL Use null if rating is disabled or int value as maximum rating value, for example: 5  */
+    /** @var int|NULL Use null if rating is disabled or int value as maximum rating value, for example: 5 */
     public $ratingMaxValue = 5;
+
+    /** @var string|NULL */
+    public $adminTitle;
 
     /** @var null Classname of comment postprocessor */
     public $commentPostProcessor = null;

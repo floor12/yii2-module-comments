@@ -7,20 +7,20 @@
  *
  * @var $this \yii\web\View
  * @var $model \floor12\comments\models\Comment
+ * @var $module \floor12\comments\Module
  */
 
+use floor12\comments\assets\IconHelper;
 use floor12\comments\models\CommentStatus;
 use floor12\editmodal\EditModalHelper;
 use yii\helpers\Html;
 
-$fontAwesome = Yii::$app->getModule('comments')->fontAwesome;
 ?>
 
-<div class="f12-comment-admin-object <?= "f12-comment-admin-object-status{$model->status}" ?> <?php if ($model->parent_id) echo "f12-comment-admin-sub"; ?>">
+<div class="f12-comment-admin-object <?php if ($model->parent_id) echo "f12-comment-admin-sub"; ?>">
     <div class="f12-comment-admin-object-header">
-        <?= $model->name ?>
-        <span class="f12-comment-admin-object-controllr">
-            <?= $model->status == CommentStatus::PENDING ? Html::a(\floor12\comments\assets\IconHelper::CHECK, null, [
+        <div class="f12-comment-admin-object-control">
+            <?= $model->status == CommentStatus::PENDING ? Html::a(IconHelper::CHECK, null, [
                 'onclick' => "commentApprove({$model->id})",
                 'class' => 'btn btn-default btn-xs',
                 'title' => Yii::t('app.f12.comments', 'Approve this comment')
@@ -32,7 +32,7 @@ $fontAwesome = Yii::$app->getModule('comments')->fontAwesome;
                 'class' => 'btn btn-default btn-xs',
             ]) ?>
 
-            <?= Html::a(\floor12\comments\assets\IconHelper::LINK, $model->url, [
+            <?= Html::a(IconHelper::LINK, $model->url, [
                 'title' => Yii::t('app.f12.comments', 'Go to page'),
                 'data-pjax' => '0',
                 'target' => '_blank',
@@ -42,15 +42,24 @@ $fontAwesome = Yii::$app->getModule('comments')->fontAwesome;
             <?= $model->status != CommentStatus::DELETED ? Html::a(\floor12\editmodal\IconHelper::TRASH, null, [
                 'onclick' => EditModalHelper::deleteItem(['/comments/admin/delete'], $model->id),
                 'title' => Yii::t('app.f12.comments', 'Delete this comment'),
-                'class' => 'btn btn-default btn-sm',
+                'class' => 'btn btn-default btn-xs',
             ]) : null ?>
 
-        </span>
-
-
-        <div class="f12-comment-admin-object-date">
-            <?= Yii::$app->formatter->asDatetime($model->created) ?>
         </div>
+        <div class="f12-comment-admin-object-status f12-comment-admin-object-status<?= $model->status ?>"></div>
+        <div class="f12-comment-name"><?= $model->name ?></div>
+        <?php if ($module->ratingMaxValue && $model->rating): ?>
+            <div class="f12-comment-rating"><?= $model->rating ?>/<?= $module->ratingMaxValue ?></div>
+        <?php endif; ?>
+        <div class="f12-comment-date"><?= \Yii::$app->formatter->asDatetime($model->created) ?></div>
+        <?php if ($model->getCommentObject()): ?>
+            <div class="small">
+                <?= Html::a($model->getCommentObject()->getHumanReadbleObjectName(), $model->url, [
+                    'target' => '_blank',
+                    'data-pjax' => '0',
+                ]) ?>
+            </div>
+        <?php endif; ?>
     </div>
-    <?= Yii::$app->getModule('comments')->useWYSIWYG ? $model->content : Html::tag('p', nl2br($model->content)); ?>
+    <?= $module->useWYSIWYG ? $model->content : Html::tag('p', nl2br($model->content)); ?>
 </div>

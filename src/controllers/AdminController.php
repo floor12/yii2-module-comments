@@ -11,8 +11,10 @@ namespace floor12\comments\controllers;
 use floor12\comments\logic\CommentApprove;
 use floor12\comments\models\Comment;
 use floor12\comments\models\CommentFilter;
+use floor12\comments\Module;
 use floor12\editmodal\DeleteAction;
 use floor12\editmodal\EditModalAction;
+use floor12\editmodal\IndexAction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -26,7 +28,10 @@ use yii\web\NotFoundHttpException;
  */
 class AdminController extends Controller
 {
+    /** @var string */
     public $defaultAction = 'index';
+    /** @var Module */
+    public $commentModule;
 
     public function behaviors()
     {
@@ -36,13 +41,15 @@ class AdminController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => [Yii::$app->getModule('comments')->editRole],
+                        'roles' => [$this->commentModule->editRole],
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
+                    'index' => ['get'],
+                    'form' => ['get', 'post'],
                     'delete' => ['delete'],
                     'approve' => ['post'],
                 ],
@@ -55,19 +62,10 @@ class AdminController extends Controller
      */
     public function init()
     {
-        $this->layout = Yii::$app->getModule('comments')->layout;
+        $this->commentModule = Yii::$app->getModule('comments');
+        $this->layout = $this->commentModule->layout;
     }
 
-    /** Comment admin page
-     * @return string
-     */
-    public function actionIndex(): string
-    {
-        $model = new CommentFilter();
-        $model->load(Yii::$app->request->get());
-        $model->validate();
-        return $this->render(Yii::$app->getModule('comments')->viewAdminIndex, ['model' => $model]);
-    }
 
     /** Comment approve action
      * @param $id
@@ -95,6 +93,15 @@ class AdminController extends Controller
     public function actions(): array
     {
         return [
+            'index' => [
+                'class' => IndexAction::class,
+                'model' => CommentFilter::class,
+                'view' => $this->commentModule->viewAdminIndex,
+                'viewParams' => [
+                    'adminTitle' => $this->commentModule->adminTitle,
+                    'module' => $this->commentModule
+                ]
+            ],
             'form' => [
                 'class' => EditModalAction::class,
                 'model' => Comment::class,

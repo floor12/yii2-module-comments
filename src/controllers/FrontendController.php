@@ -29,7 +29,6 @@ class FrontendController extends Controller
     private $_commentsRendered;
     private $_comments;
 
-    
 
     /**
      * @param $object_id
@@ -43,7 +42,7 @@ class FrontendController extends Controller
             ->tree($this->module->commentsOrder);
 
         $ratingMaxValue = $this->module->ratingMaxValue;
-        
+
         if (!Yii::$app->user->can($this->module->editRole))
             $commetsQuery->active();
 
@@ -60,13 +59,17 @@ class FrontendController extends Controller
                     'allowPublish' => $comment->status == CommentStatus::PENDING && Yii::$app->user->can(Yii::$app->getModule('comments')->editRole),
 //                    'allowAnswer' => $comment->status == CommentStatus::PUBLISHED && !(Yii::$app->user->isGuest && Yii::$app->getModule('comments')->userMode == Module::MODE_ONLY_USERS),
                     'allowEdit' => (Yii::$app->user->id == $comment->create_user_id || Yii::$app->user->can(Yii::$app->getModule('comments')->editRole)),
-                    'ratingMaxValue' => $ratingMaxValue
+                    'ratingMaxValue' => $ratingMaxValue,
+                    'object_id' => $object_id,
+                    'classname' => $classname,
                 ]);
         }
 
         return $this->renderAjax(Yii::$app->getModule('comments')->viewCommentList, [
             'comments' => $this->_commentsRendered,
             'commentsTotal' => $commentsTotal,
+            'object_id' => $object_id,
+            'classname' => $classname,
         ]);
     }
 

@@ -65,6 +65,7 @@ class AdminController extends Controller
     {
         $this->commentModule = Yii::$app->getModule('comments');
         $this->layout = $this->commentModule->layout;
+        parent::init();
     }
 
 

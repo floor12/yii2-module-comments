@@ -24,7 +24,7 @@ use yii\web\View;
     <div class="f12-comment-admin-object-header">
         <div class="f12-comment-admin-object-control">
             <?= $model->status == CommentStatus::PENDING ? Html::a(IconHelper::CHECK, null, [
-                'onclick' => "commentApprove({$model->id})",
+                'onclick' => "commentApprove({$model->id})", 
                 'class' => 'btn btn-default btn-xs',
                 'title' => Yii::t('app.f12.comments', 'Approve this comment')
             ]) : null ?>

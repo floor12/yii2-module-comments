@@ -72,7 +72,9 @@ div.f12-comment-list div.f12-subcomment form.f12-comments-form {
   padding-bottom: 40px; }
 
 div.f12-comment-admin-object {
-  margin: 32px 0 0 0; }
+  margin: 32px 0 0 0;
+  padding: 10px;
+  border-radius: 7px; }
   div.f12-comment-admin-object div.f12-comment-admin-object-header {
     margin-bottom: 15px; }
     div.f12-comment-admin-object div.f12-comment-admin-object-header div.f12-comment-name {

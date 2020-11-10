@@ -10,15 +10,7 @@ namespace floor12\comments;
 
 use Yii;
 
-/**
- * Class Module
- * @package floor12\files
- * @property string $token_salt
- * @property string $fontAwesome
- * @property string $storage
- * @property string $controllerNamespace
- *
- */
+
 class Module extends \yii\base\Module
 {
     const FORM_POSITION_BEFORE_LIST = 'before';
@@ -56,9 +48,6 @@ class Module extends \yii\base\Module
 
     /**  @var string Switch comment form position: before or after comment list. */
     public $formPosition = self::FORM_POSITION_BEFORE_LIST;
-
-    /** @var string FontAwesome helper class */
-    public $fontAwesome = 'rmrevin\yii\fontawesome\FontAwesome';
 
     /** @var string */
     public $editRole = 'admin';
@@ -124,7 +113,6 @@ class Module extends \yii\base\Module
      */
     public function init()
     {
-//        $this->fontAwesome = Yii::createObject($this->fontAwesome);
         $this->registerTranslations();
     }
 

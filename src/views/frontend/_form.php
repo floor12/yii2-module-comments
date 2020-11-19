@@ -14,7 +14,7 @@
 use floor12\comments\models\Comment;
 use floor12\comments\Module;
 use floor12\files\components\FileInputWidget;
-use marqu3s\summernote\Summernote;
+use floor12\summernote\Summernote;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;

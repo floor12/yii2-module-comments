@@ -86,7 +86,7 @@ class Comment extends ActiveRecord
             [['author_phone'], 'required', 'on' => self::SCENARIO_GUEST, 'message' => Yii::t('app.f12.comments', 'This field is required.')],
             [['create_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['create_user_id' => 'id']],
             [['update_user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Yii::$app->getModule('comments')->userClass, 'targetAttribute' => ['update_user_id' => 'id']],
-            [['attachments'], 'file', 'maxFiles' => 100],
+            [['attachments'], 'file', 'maxFiles' => 100,'extensions' => Yii::$app->getModule('comments')->attachmentsExtensions],
             ['attachments_ids', 'safe'],
             ['rating', 'integer', 'min' => 1, 'max' => 5]
         ];
@@ -184,7 +184,7 @@ class Comment extends ActiveRecord
     public function getCommentObject()
     {
         $classname = $this->class;
-        return $classname::findOne($this->create_user_id);
+        return $classname::findOne($this->object_id);
     }
 
     /**

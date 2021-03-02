@@ -66,6 +66,8 @@ $form = ActiveForm::begin([
             'label' => Yii::t('app.f12.comments', 'Subscribe author of this comment to the thread')
         ]) ?>
 
+    <?= $form->field($model, 'attachments')->widget(FileInputWidget::class) ?>
+
 </div>
 
 <div class="modal-footer">

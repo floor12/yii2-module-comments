@@ -76,6 +76,9 @@ class Module extends \yii\base\Module
     /** @var boolean */
     public $useWYSIWYG = true;
 
+    /** @var array */
+    public $attachmentsExtensions = null;
+
     /** @var array Client options for Summernote WYSIWYG Editor */
     public $summernoteClientOptions = [
         'height' => '100px',

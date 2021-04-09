@@ -111,6 +111,7 @@ $(document).on('click', '.f12-comment-button-answer', function () {
 $(document).on('submit', '.f12-comments-form', function (event) {
     event.preventDefault();
     form = $(this);
+    form.find('button[type=submit]').prop('disabled', true);
     action = form.attr('action');
     $.ajax({
         method: 'POST',
@@ -126,6 +127,7 @@ $(document).on('submit', '.f12-comments-form', function (event) {
             }, 2000)
         },
         error: function (response) {
+            form.find('button[type=submit]').prop('disabled', false);
             processError(response);
         }
 

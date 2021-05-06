@@ -76,7 +76,8 @@ class Comment extends ActiveRecord
     {
         return [
             [['status', 'created', 'updated', 'class', 'object_id', 'content'], 'required', 'message' => Yii::t('app.f12.comments', 'This field is required.')],
-            [['status', 'created', 'updated', 'create_user_id', 'update_user_id', 'object_id', 'parent_id', 'subscribe'], 'integer'],
+            [['status', 'created', 'updated', 'create_user_id', 'update_user_id', 'object_id', 'parent_id'], 'integer'],
+            ['subscribe', 'boolean'],
             [['content'], 'string'],
             [['author_email'], 'email'],
             ['author_phone', PhoneValidator::class],

@@ -12,6 +12,8 @@ var f12Comments = {
 
     commentBackup: null,
 
+    isSubmiting: false,
+
     newComment: function (event) {
         let params = $(event.target).parents('div.f12-comments').data('params');
         this.loadForm(params);
@@ -110,6 +112,10 @@ $(document).on('click', '.f12-comment-button-answer', function () {
 
 $(document).on('submit', '.f12-comments-form', function (event) {
     event.preventDefault();
+    if (f12Comments.isSubmiting === true)
+        return;
+    f12Comments.isSubmiting = true;
+
     form = $(this);
     form.find('button[type=submit]').prop('disabled', true);
     action = form.attr('action');
@@ -122,11 +128,13 @@ $(document).on('submit', '.f12-comments-form', function (event) {
             f12Comments.loadList('#' + id);
             form.html('');
             info(response, 1);
+            f12Comments.isSubmiting = false;
             setTimeout(function () {
                 form.fadeOut(500);
             }, 2000)
         },
         error: function (response) {
+            f12Comments.isSubmiting = false;
             form.find('button[type=submit]').prop('disabled', false);
             processError(response);
         }

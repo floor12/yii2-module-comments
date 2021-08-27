@@ -35,10 +35,12 @@ class FrontendController extends Controller
      * @param $classname
      * @return string
      */
-    public function actionIndex($object_id, $classname): string
+    public function actionIndex($object_id, $classname, $additional_ids = null): string
     {
+        if ($additional_ids)
+            $additional_ids = explode(',', $additional_ids);
         $commetsQuery = Comment::find()
-            ->byObject($classname, $object_id)
+            ->byObject($classname, $additional_ids ? array_merge($additional_ids, [$object_id]) : $object_id)
             ->tree($this->module->commentsOrder);
 
         $ratingMaxValue = $this->module->ratingMaxValue;

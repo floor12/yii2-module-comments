@@ -42,9 +42,10 @@ var f12Comments = {
         var block = $(blockId);
         classname = block.data('classname');
         object_id = block.data('object_id');
+        additional_ids = block.data('additional_ids');
         $.ajax({
             url: f12Comments.indexUrl,
-            data: {classname: classname, object_id: object_id},
+            data: {classname, object_id, additional_ids},
             success: function (response) {
                 block.html(response);
             },

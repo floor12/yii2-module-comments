@@ -20,6 +20,7 @@ class CommentsWidget extends Widget
 {
     public $formPosition;
     public $object_id;
+    public $additional_ids;
     public $classname;
     public $showForm = false;
 
@@ -59,6 +60,7 @@ class CommentsWidget extends Widget
             'class' => 'f12-comment-form-block',
             'id' => $this->_commentFormBlock_id,
             'data-object_id' => $this->object_id,
+            'data-additional_ids' => $this->additional_ids,
             'data-classname' => $this->classname,
             'data-comments_list_id' => $this->_commentListBlock_id
         ]);
@@ -67,6 +69,7 @@ class CommentsWidget extends Widget
             'class' => 'f12-comment-list',
             'id' => $this->_commentListBlock_id,
             'data-object_id' => $this->object_id,
+            'data-additional_ids' => $this->additional_ids,
             'data-classname' => $this->classname,
         ]);
     }
@@ -85,6 +88,7 @@ class CommentsWidget extends Widget
             'block_id' => "#{$this->_commentFormBlock_id}",
             'classname' => $this->classname,
             'object_id' => $this->object_id,
+            'data-additional_ids' => $this->additional_ids,
         ]);
 
         $this->view->registerJs("f12Comments.indexUrl = '{$this->_f12CommentIndexUrl}'");

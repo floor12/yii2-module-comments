@@ -16,6 +16,7 @@ use floor12\summernote\Summernote;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+use floor12\files\components\FileInputWidget;
 
 $form = ActiveForm::begin([
     'id' => 'f12-comment-form',
@@ -31,7 +32,6 @@ $form = ActiveForm::begin([
 <div class="modal-body">
 
     <?= $form->errorSummary($model); ?>
-
     <?php if (!$model->create_user_id): ?>
         <div class="row">
             <div class="col-md-4">

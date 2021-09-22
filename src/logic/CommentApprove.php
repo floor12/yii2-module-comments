@@ -33,7 +33,7 @@ class CommentApprove
         $this->_comment->update_user_id = $this->_identity->getId();
         $this->_comment->updated = time();
 
-        if (Yii::$app->getModule('comments')->enableNotificator) {
+        if (Yii::$app->getModule('comments')->enableNotificator && $this->_comment->email) {
             $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
                 Yii::$app
                     ->mailer
@@ -50,6 +50,12 @@ class CommentApprove
             // уведомляем подписчиков
             $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
                 Yii::createObject(CommentInform::class, [$event->sender])->execute();
+            });
+        }
+
+        if (is_callable(Yii::$app->getModule('comments')->onApprove)) {
+            $this->_comment->on(Comment::EVENT_AFTER_UPDATE, function ($event) {
+                call_user_func(Yii::$app->getModule('comments')->onApprove, $this->_comment);
             });
         }
 

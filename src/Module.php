@@ -78,6 +78,8 @@ class Module extends \yii\base\Module
 
     /** @var array */
     public $attachmentsExtensions = null;
+    /** @var null|callable */
+    public $onApprove = null;
 
     /** @var array Client options for Summernote WYSIWYG Editor */
     public $summernoteClientOptions = [

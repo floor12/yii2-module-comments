@@ -12,11 +12,11 @@
 use floor12\comments\models\Comment;
 use floor12\comments\models\CommentStatus;
 use floor12\comments\widgets\StarRatingWidget;
+use floor12\files\components\FileInputWidget;
 use floor12\summernote\Summernote;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-use floor12\files\components\FileInputWidget;
 
 $form = ActiveForm::begin([
     'id' => 'f12-comment-form',
@@ -48,7 +48,9 @@ $form = ActiveForm::begin([
 
     <div class="row">
         <div class="col-md-8">
-            <?= $form->field($model, 'status')->dropDownList(CommentStatus::listData()) ?>
+            <?= $form->field($model, 'status')->dropDownList(CommentStatus::listData(), [
+                'disabled' => $model->status == CommentStatus::PENDING
+            ]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'rating')->widget(StarRatingWidget::class) ?>

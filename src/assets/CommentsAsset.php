@@ -26,10 +26,5 @@ class CommentsAsset extends AssetBundle
         'yii\web\JqueryAsset',
         'floor12\notification\NotificationAsset'
     ];
-
-    public function init()
-    {
-        parent::init();
-        $this->publishOptions['forceCopy'] = true;
-    }
+    
 }

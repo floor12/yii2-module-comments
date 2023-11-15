@@ -86,19 +86,23 @@ class CommentCreate
             $this->_model->status = CommentStatus::PENDING;
             $this->_message = Yii::t('app.f12.comments', "Thank you! Your comment will be published after moderation.");
 
-            if (Yii::$app->getModule('comments')->adminEmailAddress) {
-                $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
-                    Yii::$app
-                        ->mailer
-                        ->compose(
-                            ['html' => "@vendor/floor12/yii2-module-comments/src/mail/new-comment-html.php"],
-                            ['comment' => $event->sender, 'moderateLink' => Yii::$app->urlManager->createAbsoluteUrl('/comments/admin')]
-                        )
-                        ->setFrom([Yii::$app->getModule('comments')->emailFromAddress => Yii::t('app.f12.comments', 'Сomment module email robot')])
-                        ->setSubject(Yii::t('app.f12.comments', 'New comment is waiting for moderation.'))
-                        ->setTo(Yii::$app->getModule('comments')->adminEmailAddress)
-                        ->send();
-                });
+            try {
+                if (Yii::$app->getModule('comments')->adminEmailAddress) {
+                    $this->_model->on(Comment::EVENT_AFTER_INSERT, function ($event) {
+                        Yii::$app
+                            ->mailer
+                            ->compose(
+                                ['html' => "@vendor/floor12/yii2-module-comments/src/mail/new-comment-html.php"],
+                                ['comment' => $event->sender, 'moderateLink' => Yii::$app->urlManager->createAbsoluteUrl('/comments/admin')]
+                            )
+                            ->setFrom([Yii::$app->getModule('comments')->emailFromAddress => Yii::t('app.f12.comments', 'Сomment module email robot')])
+                            ->setSubject(Yii::t('app.f12.comments', 'New comment is waiting for moderation.'))
+                            ->setTo(Yii::$app->getModule('comments')->adminEmailAddress)
+                            ->send();
+                    });
+                }
+            } catch (\Exception $e) {
+                \Yii::$app->getErrorHandler()->logException($e);
             }
 
         }

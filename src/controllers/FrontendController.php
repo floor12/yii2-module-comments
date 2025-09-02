@@ -40,7 +40,7 @@ class FrontendController extends Controller
         if ($additional_ids)
             $additional_ids = explode(',', $additional_ids);
         $commetsQuery = Comment::find()
-            ->byObject($classname, $additional_ids ? array_merge($additional_ids, [$object_id]) : $object_id)
+            ->byObject($classname, $additional_ids ? array_merge($additional_ids, [(int)$object_id]) : $object_id)
             ->tree($this->module->commentsOrder);
 
         $ratingMaxValue = $this->module->ratingMaxValue;
